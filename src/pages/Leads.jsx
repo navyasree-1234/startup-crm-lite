@@ -3,12 +3,15 @@ import toast, { Toaster } from "react-hot-toast";
 // Import Context to hook into state operations
 import { LeadContext } from "../context/LeadContext";
 // Import Lucide React icons for buttons, headers, search, and view toggling
-import { Plus, Search, Filter, LayoutGrid, Table, Info } from "lucide-react";
+import { Plus, LayoutGrid, Table } from "lucide-react";
 // Import Custom Components
 import StatusBadge from "../components/leads/StatusBadge";
 import LeadForm from "../components/leads/LeadForm";
 import LeadCard from "../components/leads/LeadCard";
 import LeadTable from "../components/leads/LeadTable";
+import SearchBar from "../components/common/SearchBar";
+import FilterBar from "../components/common/FilterBar";
+import EmptyState from "../components/common/EmptyState";
 
 /**
  * Leads component provides the main CRM workspace where managers can search,
@@ -28,13 +31,10 @@ function Leads() {
   const [selectedLead, setSelectedLead] = useState(null);
 
   // Search input state value
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Filter selection state value (default to "All" stages)
-  const [statusFilter, setStatusFilter] = useState("All");
-
-  // Filter selection state value for Lead Source (default to "All" sources)
-  const [sourceFilter, setSourceFilter] = useState("All");
+  const [activeFilter, setActiveFilter] = useState("All");
 
   // Form submission handler inside the modal (works for both CREATE and UPDATE)
   const handleFormSubmit = (formData) => {
@@ -110,18 +110,14 @@ function Leads() {
     setSelectedLead(null);
   };
 
-  // Filter leads based on active search terms, status tabs, and source selections
-  const filteredLeads = leads.filter((lead) => {
-    const matchesSearch =
-      lead.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lead.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (lead.email && lead.email.toLowerCase().includes(searchTerm.toLowerCase()));
-
-    const matchesStatus = statusFilter === "All" || lead.status === statusFilter;
-    const matchesSource = sourceFilter === "All" || lead.source === sourceFilter;
-
-    return matchesSearch && matchesStatus && matchesSource;
-  });
+  // Filter leads based on active search queries and status filters
+  const filteredLeads = leads
+    .filter(lead => activeFilter === 'All' || lead.status === activeFilter)
+    .filter(lead =>
+      lead.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      lead.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      lead.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
   return (
     <div className="space-y-6">
@@ -151,57 +147,12 @@ function Leads() {
       <div className="bg-white p-5 rounded-xl border border-slate-100 shadow-sm space-y-4">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           
-          {/* Search box input wrapper */}
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-3 w-4.5 h-4.5 text-slate-400" />
-            <input
-              type="text"
-              placeholder="Search by name, company, email..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2.5 w-full text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-500/10 bg-slate-50/50"
-            />
-          </div>
+          {/* Custom SearchBar component */}
+          <SearchBar value={searchQuery} onChange={setSearchQuery} />
 
           <div className="flex flex-wrap items-center gap-3">
-            {/* Pipeline Status Filter Selection Dropdown */}
-            <div className="flex items-center gap-2 bg-slate-50/50 px-3 py-1 border border-slate-200 rounded-xl">
-              <Filter className="w-4 h-4 text-slate-400 shrink-0" />
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="py-1.5 text-xs font-semibold text-slate-700 focus:outline-none bg-transparent cursor-pointer"
-              >
-                <option value="All">All Pipeline Stages</option>
-                <option value="New">New</option>
-                <option value="Contacted">Contacted</option>
-                <option value="Meeting Scheduled">Meeting Scheduled</option>
-                <option value="Proposal Sent">Proposal Sent</option>
-                <option value="Won">Won</option>
-                <option value="Lost">Lost</option>
-              </select>
-            </div>
-
-            {/* Lead Source Filter Selection Dropdown */}
-            <div className="flex items-center gap-2 bg-slate-50/50 px-3 py-1 border border-slate-200 rounded-xl">
-              <Info className="w-4 h-4 text-slate-400 shrink-0" />
-              <select
-                value={sourceFilter}
-                onChange={(e) => setSourceFilter(e.target.value)}
-                className="py-1.5 text-xs font-semibold text-slate-700 focus:outline-none bg-transparent cursor-pointer"
-              >
-                <option value="All">All Lead Sources</option>
-                <option value="Website">Website</option>
-                <option value="Referral">Referral</option>
-                <option value="LinkedIn">LinkedIn</option>
-                <option value="Cold Call">Cold Call</option>
-                <option value="Email Campaign">Email Campaign</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
             {/* Layout View Toggle buttons */}
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200/40">
+            <div className="flex items-center gap-1 bg-slate-105 p-1 rounded-xl border border-slate-200/40">
               <button
                 onClick={() => setViewMode("card")}
                 className={`p-1.5 rounded-lg transition-all duration-200 cursor-pointer ${
@@ -230,16 +181,27 @@ function Leads() {
           </div>
 
         </div>
+
+        {/* Custom FilterBar component */}
+        <div className="pt-4 border-t border-slate-100">
+          <FilterBar
+            activeFilter={activeFilter}
+            onFilterChange={setActiveFilter}
+            leads={leads}
+          />
+        </div>
       </div>
 
       {/* Main content display section */}
       {filteredLeads.length === 0 ? (
-        <div className="bg-white rounded-xl border border-slate-100 shadow-sm flex flex-col items-center justify-center py-16 text-center">
-          <p className="text-sm font-semibold text-slate-600">No leads found</p>
-          <p className="text-xs text-slate-400 mt-1">
-            Try adjusting your query string filters or add a new lead entry.
-          </p>
-        </div>
+        <EmptyState
+          totalCount={leads.length}
+          filteredCount={filteredLeads.length}
+          onClearFilters={() => {
+            setSearchQuery("");
+            setActiveFilter("All");
+          }}
+        />
       ) : (
         <>
           {/* Card View Layout */}
