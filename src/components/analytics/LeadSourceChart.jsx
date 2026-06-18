@@ -1,0 +1,100 @@
+import React from "react";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Cell,
+  Tooltip,
+} from "recharts";
+import { SOURCE_COLORS } from "../../constants/analyticsColors";
+
+function LeadSourceChart({ data }) {
+  const totalLeads = data.reduce((sum, d) => sum + d.value, 0);
+
+  return (
+    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm transition-all hover:shadow-md flex flex-col justify-between h-full min-h-[380px]">
+      <div>
+        <h3 className="text-lg font-bold text-slate-900 tracking-tight">Lead Source Analytics</h3>
+        <p className="text-xs text-slate-500 mt-0.5">
+          Distribution and effectiveness of different marketing and outreach channels
+        </p>
+      </div>
+
+      <div className="h-[230px] w-full mt-6">
+        {totalLeads === 0 ? (
+          <div className="h-full flex items-center justify-center text-slate-400 text-sm font-medium">
+            No source data available
+          </div>
+        ) : (
+          <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+            <BarChart
+              layout="vertical"
+              data={data}
+              margin={{ top: 5, right: 15, left: 15, bottom: 5 }}
+            >
+              <XAxis
+                type="number"
+                stroke="#64748B"
+                fontSize={11}
+                fontWeight={500}
+                tickLine={false}
+                axisLine={false}
+                allowDecimals={false}
+              />
+              <YAxis
+                type="category"
+                dataKey="name"
+                stroke="#64748B"
+                fontSize={11}
+                fontWeight={600}
+                tickLine={false}
+                axisLine={false}
+                width={85}
+              />
+              <Tooltip
+                cursor={{ fill: "#F8FAFC", radius: 4 }}
+                content={({ active, payload }) => {
+                  if (active && payload && payload.length) {
+                    const item = payload[0].payload;
+                    const percentage = totalLeads > 0 ? Math.round((item.value / totalLeads) * 100) : 0;
+                    return (
+                      <div className="bg-white p-3 border border-slate-100 rounded-xl shadow-lg animate-in fade-in zoom-in-95 duration-100">
+                        <p className="text-xs font-bold text-slate-900 mb-0.5">
+                          {item.name}
+                        </p>
+                        <p className="text-sm font-bold text-blue-600">
+                          {item.value} {item.value === 1 ? "Lead" : "Leads"}
+                        </p>
+                        <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                          {percentage}% of total leads
+                        </p>
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
+              />
+              <Bar
+                dataKey="value"
+                radius={[0, 6, 6, 0]}
+                maxBarSize={20}
+                animationDuration={1000}
+              >
+                {data.map((entry, index) => (
+                  <Cell
+                    key={`source-cell-${index}`}
+                    fill={SOURCE_COLORS[entry.name] || "#64748B"}
+                  />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default React.memo(LeadSourceChart);
