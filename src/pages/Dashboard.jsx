@@ -66,14 +66,14 @@ function Dashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome Banner Panel */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white dark:bg-gray-800 p-6 rounded-2xl border border-slate-100 dark:border-gray-700 shadow-sm transition-colors duration-200">
         <div>
           <h1 className="text-2xl font-bold text-text-dark">Welcome back, Admin</h1>
           <p className="text-sm text-text-gray mt-1 font-medium">
             Here is what's happening with your startup pipeline today.
           </p>
         </div>
-        <div className="text-xs font-bold text-slate-500 bg-slate-50 px-3.5 py-2 rounded-full border border-slate-200/60 shadow-sm">
+        <div className="text-xs font-bold text-slate-500 dark:text-gray-400 bg-slate-50 dark:bg-gray-750 px-3.5 py-2 rounded-full border border-slate-200/60 dark:border-gray-650 shadow-sm transition-colors duration-200">
           Last updated: Just now
         </div>
       </div>

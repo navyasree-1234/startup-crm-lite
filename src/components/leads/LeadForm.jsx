@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 
 // Standard Option lists matching the requirements
 const STATUS_OPTIONS = [
@@ -48,8 +48,10 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
   // Track if form validation check was triggered
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Load initialData when editing
-  useEffect(() => {
+  // Keep track of the initialData prop to reset form fields on update
+  const [prevInitialData, setPrevInitialData] = useState(initialData);
+
+  if (initialData !== prevInitialData) {
     if (initialData) {
       setName(initialData.name || "");
       setCompany(initialData.company || "");
@@ -70,7 +72,8 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
     }
     setErrors({ name: "", company: "", email: "" });
     setIsSubmitted(false);
-  }, [initialData]);
+    setPrevInitialData(initialData);
+  }
 
   // Handle single field validations
   const validateField = (field, val) => {
@@ -133,7 +136,7 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="lead-name"
-          className="text-xs font-bold text-slate-500 tracking-wider uppercase"
+          className="text-xs font-bold text-slate-500 dark:text-gray-400 tracking-wider uppercase"
         >
           Lead Name *
         </label>
@@ -143,8 +146,8 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
           placeholder="e.g. Jane Doe"
           value={name}
           onChange={handleChange("name", setName)}
-          className={`px-3.5 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 bg-slate-50/50 font-medium transition-all ${
-            errors.name ? "border-rose-500 bg-rose-50/10" : "border-slate-200"
+          className={`px-3.5 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 dark:focus:border-blue-500 bg-slate-50/50 dark:bg-gray-900/50 text-slate-800 dark:text-white font-medium transition-all duration-200 ${
+            errors.name ? "border-rose-500 bg-rose-50/10 dark:bg-rose-950/10" : "border-slate-200 dark:border-gray-700"
           }`}
           aria-invalid={!!errors.name}
           aria-describedby={errors.name ? "name-error" : undefined}
@@ -160,7 +163,7 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="company-name"
-          className="text-xs font-bold text-slate-500 tracking-wider uppercase"
+          className="text-xs font-bold text-slate-500 dark:text-gray-400 tracking-wider uppercase"
         >
           Company Name *
         </label>
@@ -170,8 +173,8 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
           placeholder="e.g. Initech Corp"
           value={company}
           onChange={handleChange("company", setCompany)}
-          className={`px-3.5 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 bg-slate-50/50 font-medium transition-all ${
-            errors.company ? "border-rose-500 bg-rose-50/10" : "border-slate-200"
+          className={`px-3.5 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 dark:focus:border-blue-500 bg-slate-50/50 dark:bg-gray-900/50 text-slate-800 dark:text-white font-medium transition-all duration-200 ${
+            errors.company ? "border-rose-500 bg-rose-50/10 dark:bg-rose-950/10" : "border-slate-200 dark:border-gray-700"
           }`}
           aria-invalid={!!errors.company}
           aria-describedby={errors.company ? "company-error" : undefined}
@@ -187,7 +190,7 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
       <div className="flex flex-col gap-1.5">
         <label
           htmlFor="lead-email"
-          className="text-xs font-bold text-slate-500 tracking-wider uppercase"
+          className="text-xs font-bold text-slate-500 dark:text-gray-400 tracking-wider uppercase"
         >
           Email Address *
         </label>
@@ -197,8 +200,8 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
           placeholder="e.g. jane@company.com"
           value={email}
           onChange={handleChange("email", setEmail)}
-          className={`px-3.5 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 bg-slate-50/50 font-medium transition-all ${
-            errors.email ? "border-rose-500 bg-rose-50/10" : "border-slate-200"
+          className={`px-3.5 py-2.5 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 dark:focus:border-blue-500 bg-slate-50/50 dark:bg-gray-900/50 text-slate-800 dark:text-white font-medium transition-all duration-200 ${
+            errors.email ? "border-rose-500 bg-rose-50/10 dark:bg-rose-950/10" : "border-slate-200 dark:border-gray-700"
           }`}
           aria-invalid={!!errors.email}
           aria-describedby={errors.email ? "email-error" : undefined}
@@ -216,7 +219,7 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
         <div className="flex flex-col gap-1.5">
           <label
             htmlFor="lead-phone"
-            className="text-xs font-bold text-slate-500 tracking-wider uppercase"
+            className="text-xs font-bold text-slate-500 dark:text-gray-400 tracking-wider uppercase"
           >
             Phone Number
           </label>
@@ -226,7 +229,7 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
             placeholder="e.g. +1 (555) 019-2834"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            className="px-3.5 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 bg-slate-50/50 font-medium"
+            className="px-3.5 py-2.5 text-sm border border-slate-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 dark:focus:border-blue-500 bg-slate-50/50 dark:bg-gray-900/50 text-slate-800 dark:text-white font-medium transition-colors duration-200"
           />
         </div>
 
@@ -234,7 +237,7 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
         <div className="flex flex-col gap-1.5">
           <label
             htmlFor="lead-value"
-            className="text-xs font-bold text-slate-500 tracking-wider uppercase"
+            className="text-xs font-bold text-slate-500 dark:text-gray-400 tracking-wider uppercase"
           >
             Deal Value ($)
           </label>
@@ -245,7 +248,7 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
             placeholder="e.g. 15000"
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="px-3.5 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 bg-slate-50/50 font-medium"
+            className="px-3.5 py-2.5 text-sm border border-slate-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 dark:focus:border-blue-500 bg-slate-50/50 dark:bg-gray-900/50 text-slate-800 dark:text-white font-medium transition-colors duration-200"
           />
         </div>
       </div>
@@ -256,7 +259,7 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
         <div className="flex flex-col gap-1.5">
           <label
             htmlFor="lead-status"
-            className="text-xs font-bold text-slate-500 tracking-wider uppercase"
+            className="text-xs font-bold text-slate-500 dark:text-gray-400 tracking-wider uppercase"
           >
             Pipeline Stage
           </label>
@@ -264,10 +267,10 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
             id="lead-status"
             value={status}
             onChange={(e) => setStatus(e.target.value)}
-            className="px-3 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 bg-slate-50/50 font-semibold text-slate-800 cursor-pointer"
+            className="px-3 py-2.5 text-sm border border-slate-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 dark:focus:border-blue-500 bg-slate-50/50 dark:bg-gray-900/50 font-semibold text-slate-800 dark:text-white cursor-pointer transition-colors duration-200"
           >
             {STATUS_OPTIONS.map((opt) => (
-              <option key={opt} value={opt}>
+              <option key={opt} value={opt} className="dark:bg-gray-800 dark:text-white">
                 {opt}
               </option>
             ))}
@@ -278,7 +281,7 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
         <div className="flex flex-col gap-1.5">
           <label
             htmlFor="lead-source"
-            className="text-xs font-bold text-slate-500 tracking-wider uppercase"
+            className="text-xs font-bold text-slate-500 dark:text-gray-400 tracking-wider uppercase"
           >
             Lead Source
           </label>
@@ -286,10 +289,10 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
             id="lead-source"
             value={source}
             onChange={(e) => setSource(e.target.value)}
-            className="px-3 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 bg-slate-50/50 font-semibold text-slate-800 cursor-pointer"
+            className="px-3 py-2.5 text-sm border border-slate-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/10 focus:border-blue-600 dark:focus:border-blue-500 bg-slate-50/50 dark:bg-gray-900/50 font-semibold text-slate-800 dark:text-white cursor-pointer transition-colors duration-200"
           >
             {SOURCE_OPTIONS.map((opt) => (
-              <option key={opt} value={opt}>
+              <option key={opt} value={opt} className="dark:bg-gray-800 dark:text-white">
                 {opt}
               </option>
             ))}
@@ -298,11 +301,11 @@ function LeadForm({ initialData, onSubmit, onCancel }) {
       </div>
 
       {/* Actions buttons footer */}
-      <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 mt-6">
+      <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-gray-700 mt-6">
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl hover:bg-slate-50 hover:text-slate-900 transition-colors cursor-pointer"
+          className="px-4 py-2 border border-slate-200 dark:border-gray-750 text-slate-700 dark:text-gray-300 text-sm font-semibold rounded-xl hover:bg-slate-50 dark:hover:bg-gray-700 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer duration-200"
         >
           Cancel
         </button>

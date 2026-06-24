@@ -1,4 +1,3 @@
-import React from "react";
 
 /**
  * FilterBar Component
@@ -45,15 +44,15 @@ function FilterBar({ activeFilter, onFilterChange, leads = [] }) {
             className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 whitespace-nowrap ${
               isActive
                 ? "bg-blue-600 border-blue-600 text-white shadow-sm shadow-blue-500/10"
-                : "bg-white border-slate-200/80 text-slate-600 hover:text-slate-800 hover:bg-slate-50"
+                : "bg-white dark:bg-gray-850 border-slate-200/80 dark:border-gray-700 text-slate-600 dark:text-gray-300 hover:text-slate-800 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-gray-700"
             }`}
           >
             {stage}
             <span
-              className={`ml-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded-md ${
+              className={`ml-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded-md transition-colors duration-200 ${
                 isActive
                   ? "bg-blue-700/50 text-blue-100"
-                  : "bg-slate-100 text-slate-500"
+                  : "bg-slate-100 dark:bg-gray-700 text-slate-500 dark:text-gray-400"
               }`}
             >
               {count}

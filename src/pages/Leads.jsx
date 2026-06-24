@@ -1,11 +1,10 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
 // Import Context to hook into state operations
 import { LeadContext } from "../context/LeadContext";
 // Import Lucide React icons for buttons, headers, search, and view toggling
 import { Plus, LayoutGrid, Table } from "lucide-react";
 // Import Custom Components
-import StatusBadge from "../components/leads/StatusBadge";
 import LeadForm from "../components/leads/LeadForm";
 import LeadCard from "../components/leads/LeadCard";
 import LeadTable from "../components/leads/LeadTable";
@@ -127,8 +126,8 @@ function Leads() {
       {/* Title Header area */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Leads Management</h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-white transition-colors duration-200">Leads Management</h1>
+          <p className="text-sm text-slate-500 dark:text-gray-400 mt-1 transition-colors duration-200">
             Track, configure, and manage active startup clients in your pipeline.
           </p>
         </div>
@@ -144,7 +143,7 @@ function Leads() {
       </div>
 
       {/* Filter Toolbar Panel */}
-      <div className="bg-white p-5 rounded-xl border border-slate-100 shadow-sm space-y-4">
+      <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-slate-100 dark:border-gray-700 shadow-sm space-y-4 transition-colors duration-200">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           
           {/* Custom SearchBar component */}
@@ -152,13 +151,13 @@ function Leads() {
 
           <div className="flex flex-wrap items-center gap-3">
             {/* Layout View Toggle buttons */}
-            <div className="flex items-center gap-1 bg-slate-105 p-1 rounded-xl border border-slate-200/40">
+            <div className="flex items-center gap-1 bg-slate-100 dark:bg-gray-700 p-1 rounded-xl border border-slate-200/40 dark:border-gray-600 transition-colors duration-200">
               <button
                 onClick={() => setViewMode("card")}
                 className={`p-1.5 rounded-lg transition-all duration-200 cursor-pointer ${
                   viewMode === "card"
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "text-slate-500 hover:text-slate-750"
+                    ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-450 shadow-sm"
+                    : "text-slate-500 dark:text-gray-400 hover:text-slate-750 dark:hover:text-white"
                 }`}
                 title="Card Grid View"
                 aria-label="Switch to Card Grid View"
@@ -169,8 +168,8 @@ function Leads() {
                 onClick={() => setViewMode("table")}
                 className={`p-1.5 rounded-lg transition-all duration-200 cursor-pointer ${
                   viewMode === "table"
-                    ? "bg-white text-blue-600 shadow-sm"
-                    : "text-slate-500 hover:text-slate-750"
+                    ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-450 shadow-sm"
+                    : "text-slate-500 dark:text-gray-400 hover:text-slate-750 dark:hover:text-white"
                 }`}
                 title="Table List View"
                 aria-label="Switch to Table List View"
@@ -183,7 +182,7 @@ function Leads() {
         </div>
 
         {/* Custom FilterBar component */}
-        <div className="pt-4 border-t border-slate-100">
+        <div className="pt-4 border-t border-slate-100 dark:border-gray-700">
           <FilterBar
             activeFilter={activeFilter}
             onFilterChange={setActiveFilter}
@@ -222,7 +221,7 @@ function Leads() {
           {viewMode === "table" && (
             <>
               {/* Desktop Table View */}
-              <div className="hidden md:block bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+              <div className="hidden md:block bg-white dark:bg-gray-800 rounded-xl border border-slate-100 dark:border-gray-700 shadow-sm overflow-hidden transition-colors duration-200">
                 <LeadTable
                   leads={filteredLeads}
                   onEdit={handleEditClick}
@@ -249,16 +248,16 @@ function Leads() {
       {/* Lead Form Modal Overlay */}
       {isModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-title"
         >
           {/* Form container body */}
-          <div className="relative bg-white w-full max-w-lg p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-100 animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative bg-white dark:bg-gray-800 w-full max-w-lg p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-100 dark:border-gray-700 animate-in fade-in zoom-in-95 duration-150 transition-colors duration-200">
             <h3
               id="modal-title"
-              className="text-xl font-bold text-slate-800 mb-5 pb-3 border-b border-slate-50"
+              className="text-xl font-bold text-slate-800 dark:text-white mb-5 pb-3 border-b border-slate-100 dark:border-gray-700"
             >
               {selectedLead ? "Edit Lead Details" : "Add New CRM Lead"}
             </h3>

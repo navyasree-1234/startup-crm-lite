@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 // Import the LeadContext to access real-time activity tracking lists
 import { LeadContext } from "../../context/LeadContext";
 // Import icons to visually label different activity actions
@@ -28,25 +28,25 @@ function RecentActivity() {
       case "status_change":
         return {
           icon: ToggleLeft,
-          colorClass: "text-blue-600 bg-blue-50",
+          colorClass: "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30",
         };
       // Deletion actions get standard danger red layouts
       case "delete":
         return {
           icon: Trash2,
-          colorClass: "text-danger bg-danger/10",
+          colorClass: "text-danger bg-danger/10 dark:bg-danger/20",
         };
       // Fallback settings
       default:
         return {
           icon: ShieldAlert,
-          colorClass: "text-slate-500 bg-slate-50",
+          colorClass: "text-slate-500 dark:text-gray-400 bg-slate-50 dark:bg-gray-700",
         };
     }
   };
 
   return (
-    <div className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm flex-1">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-xl border border-slate-100 dark:border-gray-700 shadow-sm flex-1 transition-colors duration-200">
       {/* Header Panel */}
       <div className="mb-6">
         <h2 className="text-lg font-bold text-text-dark">Recent Activity</h2>
@@ -63,7 +63,7 @@ function RecentActivity() {
         </div>
       ) : (
         // Display list of activity timeline rows
-        <div className="relative border-l border-slate-100 ml-4.5 pl-6 space-y-6">
+        <div className="relative border-l border-slate-100 dark:border-gray-700 ml-4.5 pl-6 space-y-6">
           {activities.slice(0, 5).map((act) => {
             // Retrieve layout parameters matching current activity type
             const { icon: IconComponent, colorClass } = getActivityStyles(act.type);
@@ -72,7 +72,7 @@ function RecentActivity() {
               <div key={act.id} className="relative">
                 {/* Timeline dot icon overlayed exactly on the left hand border */}
                 <div
-                  className={`absolute -left-[38px] top-0.5 p-1.5 rounded-full border-4 border-white shadow-sm flex items-center justify-center ${colorClass}`}
+                  className={`absolute -left-[38px] top-0.5 p-1.5 rounded-full border-4 border-white dark:border-gray-800 shadow-sm flex items-center justify-center ${colorClass} transition-colors duration-200`}
                 >
                   <IconComponent className="w-3.5 h-3.5" />
                 </div>
@@ -80,7 +80,7 @@ function RecentActivity() {
                 {/* Timeline text contents */}
                 <div>
                   <p className="text-sm text-text-dark font-medium leading-relaxed">
-                    <span className="font-bold text-slate-800 mr-1">{act.leadName}</span>
+                    <span className="font-bold text-slate-800 dark:text-white mr-1">{act.leadName}</span>
                     <span className="text-text-gray">{act.action}</span>
                   </p>
                   {/* Timestamp label */}

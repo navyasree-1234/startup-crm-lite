@@ -21,19 +21,21 @@ const formatINR = (value) => {
 
 function KPICard({ title, value, icon: Icon, changeText, isPositive, colorClass }) {
   const TrendIcon = isPositive ? TrendingUp : TrendingDown;
-  const trendColor = isPositive ? "text-emerald-600 bg-emerald-50" : "text-rose-600 bg-rose-50";
+  const trendColor = isPositive 
+    ? "text-emerald-600 bg-emerald-50 dark:text-emerald-450 dark:bg-emerald-900/20" 
+    : "text-rose-600 bg-rose-50 dark:text-rose-450 dark:bg-rose-900/20";
 
   return (
-    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm transition-all hover:shadow-md flex flex-col justify-between">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-slate-200 dark:border-gray-700 shadow-sm transition-all hover:shadow-md flex flex-col justify-between transition-colors duration-200">
       <div className="flex items-center justify-between">
-        <span className="text-sm font-semibold text-slate-500">{title}</span>
-        <div className={`p-2.5 rounded-xl ${colorClass}`}>
+        <span className="text-sm font-semibold text-slate-500 dark:text-gray-400 transition-colors duration-200">{title}</span>
+        <div className={`p-2.5 rounded-xl ${colorClass} transition-colors duration-200`}>
           <Icon className="w-5.5 h-5.5" />
         </div>
       </div>
 
       <div className="mt-4 flex items-baseline justify-between">
-        <span className="text-2xl font-bold text-slate-900 tracking-tight">{value}</span>
+        <span className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight transition-colors duration-200">{value}</span>
         {changeText !== undefined && (
           <span className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded-lg text-[10px] font-bold ${trendColor}`}>
             <TrendIcon className="w-3 h-3" />
@@ -88,7 +90,7 @@ function StatsCards({ kpis }) {
         icon={Users}
         changeText={totalLeadsChange}
         isPositive={totalLeadsPos}
-        colorClass="bg-blue-50 text-blue-600"
+        colorClass="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400"
       />
 
       {/* Conversion Rate */}
@@ -98,7 +100,7 @@ function StatsCards({ kpis }) {
         icon={Percent}
         changeText={convRateChange}
         isPositive={convRatePos}
-        colorClass="bg-emerald-50 text-emerald-600"
+        colorClass="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400"
       />
 
       {/* Pipeline Value */}
@@ -108,7 +110,7 @@ function StatsCards({ kpis }) {
         icon={Wallet}
         changeText={pipelineChange}
         isPositive={pipelinePos}
-        colorClass="bg-amber-50 text-amber-600"
+        colorClass="bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400"
       />
 
       {/* Won Revenue */}
@@ -118,7 +120,7 @@ function StatsCards({ kpis }) {
         icon={Award}
         changeText={wonRevenueChange}
         isPositive={wonRevenuePos}
-        colorClass="bg-indigo-50 text-indigo-600"
+        colorClass="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400"
       />
 
       {/* Average Sales Cycle */}
@@ -128,7 +130,7 @@ function StatsCards({ kpis }) {
         icon={Clock}
         changeText={cycleChange}
         isPositive={cyclePos}
-        colorClass="bg-purple-50 text-purple-600"
+        colorClass="bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400"
       />
 
       {/* Lost Rate */}
@@ -138,7 +140,7 @@ function StatsCards({ kpis }) {
         icon={XOctagon}
         changeText={lostRateChange}
         isPositive={lostRatePos}
-        colorClass="bg-rose-50 text-rose-600"
+        colorClass="bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-450"
       />
     </div>
   );

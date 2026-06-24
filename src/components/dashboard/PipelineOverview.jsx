@@ -66,7 +66,7 @@ function PipelineOverview({ leads = [] }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between h-full">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-slate-100 dark:border-gray-700 shadow-sm flex flex-col justify-between h-full transition-colors duration-200">
       {/* Title Header */}
       <div className="mb-6">
         <h2 className="text-lg font-bold text-text-dark">Pipeline Overview</h2>
@@ -77,10 +77,10 @@ function PipelineOverview({ leads = [] }) {
 
       {/* Visual Multi-Segment Horizontal Progress Bar */}
       <div className="mb-6">
-        <div className="h-4 w-full bg-slate-100 rounded-full flex overflow-hidden shadow-inner border border-slate-100">
+        <div className="h-4 w-full bg-slate-100 dark:bg-gray-700 rounded-full flex overflow-hidden shadow-inner border border-slate-100 dark:border-gray-600 transition-colors duration-200">
           {activeSegments.length === 0 ? (
-            <div className="w-full h-full bg-slate-200 animate-pulse rounded-full flex items-center justify-center">
-              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">No Leads in Pipeline</span>
+            <div className="w-full h-full bg-slate-200 dark:bg-gray-655 animate-pulse rounded-full flex items-center justify-center">
+              <span className="text-[10px] text-slate-400 dark:text-gray-500 font-bold uppercase tracking-wider">No Leads in Pipeline</span>
             </div>
           ) : (
             activeSegments.map((segment) => (
@@ -99,7 +99,7 @@ function PipelineOverview({ leads = [] }) {
       <div className="space-y-3 flex-1 overflow-y-auto">
         {stageData.map((stage) => {
           return (
-            <div key={stage.status} className="flex items-center justify-between text-sm py-1.5 border-b border-slate-50 last:border-0 hover:bg-slate-50/50 px-2 rounded-lg transition-colors duration-200">
+            <div key={stage.status} className="flex items-center justify-between text-sm py-1.5 border-b border-slate-50 dark:border-gray-750 last:border-0 hover:bg-slate-50/50 dark:hover:bg-gray-700/30 px-2 rounded-lg transition-colors duration-200">
               {/* Left Side: Color badge + stage name */}
               <div className="flex items-center gap-3">
                 <span className={`w-3.5 h-3.5 rounded-full ${stage.color} shadow-sm border border-white`} />

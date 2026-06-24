@@ -9,22 +9,24 @@ import {
   Tooltip,
 } from "recharts";
 import { SOURCE_COLORS } from "../../constants/analyticsColors";
+import { useTheme } from "../../context/ThemeContext";
 
 function LeadSourceChart({ data }) {
+  const { isDarkMode } = useTheme();
   const totalLeads = data.reduce((sum, d) => sum + d.value, 0);
 
   return (
-    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm transition-all hover:shadow-md flex flex-col justify-between h-full min-h-[380px]">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-slate-200 dark:border-gray-700 shadow-sm transition-all hover:shadow-md flex flex-col justify-between h-full min-h-[380px] transition-colors duration-200">
       <div>
-        <h3 className="text-lg font-bold text-slate-900 tracking-tight">Lead Source Analytics</h3>
-        <p className="text-xs text-slate-500 mt-0.5">
+        <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight transition-colors duration-200">Lead Source Analytics</h3>
+        <p className="text-xs text-slate-500 dark:text-gray-400 mt-0.5 transition-colors duration-200">
           Distribution and effectiveness of different marketing and outreach channels
         </p>
       </div>
 
       <div className="h-[230px] w-full mt-6">
         {totalLeads === 0 ? (
-          <div className="h-full flex items-center justify-center text-slate-400 text-sm font-medium">
+          <div className="h-full flex items-center justify-center text-slate-400 dark:text-gray-500 text-sm font-medium">
             No source data available
           </div>
         ) : (
@@ -36,7 +38,7 @@ function LeadSourceChart({ data }) {
             >
               <XAxis
                 type="number"
-                stroke="#64748B"
+                stroke={isDarkMode ? "#9CA3AF" : "#64748B"}
                 fontSize={11}
                 fontWeight={500}
                 tickLine={false}
@@ -46,7 +48,7 @@ function LeadSourceChart({ data }) {
               <YAxis
                 type="category"
                 dataKey="name"
-                stroke="#64748B"
+                stroke={isDarkMode ? "#9CA3AF" : "#64748B"}
                 fontSize={11}
                 fontWeight={600}
                 tickLine={false}
@@ -54,20 +56,20 @@ function LeadSourceChart({ data }) {
                 width={85}
               />
               <Tooltip
-                cursor={{ fill: "#F8FAFC", radius: 4 }}
+                cursor={{ fill: isDarkMode ? "#374151" : "#F8FAFC", radius: 4 }}
                 content={({ active, payload }) => {
                   if (active && payload && payload.length) {
                     const item = payload[0].payload;
                     const percentage = totalLeads > 0 ? Math.round((item.value / totalLeads) * 100) : 0;
                     return (
-                      <div className="bg-white p-3 border border-slate-100 rounded-xl shadow-lg animate-in fade-in zoom-in-95 duration-100">
-                        <p className="text-xs font-bold text-slate-900 mb-0.5">
+                      <div className="bg-white dark:bg-gray-800 p-3 border border-slate-100 dark:border-gray-700 rounded-xl shadow-lg animate-in fade-in zoom-in-95 duration-100 transition-colors duration-200">
+                        <p className="text-xs font-bold text-slate-900 dark:text-white mb-0.5">
                           {item.name}
                         </p>
-                        <p className="text-sm font-bold text-blue-600">
+                        <p className="text-sm font-bold text-blue-600 dark:text-blue-400">
                           {item.value} {item.value === 1 ? "Lead" : "Leads"}
                         </p>
-                        <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                        <p className="text-[10px] text-slate-505 dark:text-gray-400 font-semibold mt-0.5">
                           {percentage}% of total leads
                         </p>
                       </div>

@@ -1,5 +1,5 @@
-// Import React Hooks to handle context creation, lifecycle effects, and state tracking
-import React, { createContext, useState, useEffect } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useState, useEffect } from "react";
 
 // Import initial mock lists for fallback data initialization
 import { initialLeads, initialActivities } from "../data/mockData";

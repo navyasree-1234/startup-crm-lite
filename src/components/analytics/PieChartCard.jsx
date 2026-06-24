@@ -32,17 +32,17 @@ function PieChartCard({ data }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm transition-all hover:shadow-md flex flex-col justify-between h-full min-h-[380px]">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-slate-200 dark:border-gray-700 shadow-sm transition-all hover:shadow-md flex flex-col justify-between h-full min-h-[380px] transition-colors duration-200">
       <div>
-        <h3 className="text-lg font-bold text-slate-900 tracking-tight">Lead Status Distribution</h3>
-        <p className="text-xs text-slate-500 mt-0.5">
+        <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight transition-colors duration-200">Lead Status Distribution</h3>
+        <p className="text-xs text-slate-500 dark:text-gray-400 mt-0.5 transition-colors duration-200">
           Prospect counts grouped by active sales pipeline stage
         </p>
       </div>
 
       <div className="relative flex-1 flex items-center justify-center my-4 h-[200px]">
         {totalLeads === 0 ? (
-          <div className="text-slate-400 text-sm font-medium">No leads data available</div>
+          <div className="text-slate-400 dark:text-gray-500 text-sm font-medium">No leads data available</div>
         ) : (
           <>
             <ResponsiveContainer width="100%" height="100%" minWidth={0}>
@@ -75,12 +75,12 @@ function PieChartCard({ data }) {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
                       return (
-                        <div className="bg-white p-3 border border-slate-100 rounded-xl shadow-lg animate-in fade-in zoom-in-95 duration-100">
-                          <p className="text-xs font-bold text-slate-900 mb-0.5">{data.name}</p>
-                          <p className="text-sm font-bold text-blue-600">
+                        <div className="bg-white dark:bg-gray-800 p-3 border border-slate-100 dark:border-gray-700 rounded-xl shadow-lg animate-in fade-in zoom-in-95 duration-100 transition-colors duration-200">
+                          <p className="text-xs font-bold text-slate-900 dark:text-white mb-0.5">{data.name}</p>
+                          <p className="text-sm font-bold text-blue-600 dark:text-blue-400">
                             {data.value} {data.value === 1 ? "Lead" : "Leads"}
                           </p>
-                          <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                          <p className="text-[10px] text-slate-500 dark:text-gray-400 font-semibold mt-0.5">
                             {data.percentage}% of total
                           </p>
                         </div>
@@ -94,10 +94,10 @@ function PieChartCard({ data }) {
 
             {/* Absolute Centered Total Label */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-3xl font-extrabold text-slate-900 tracking-tighter leading-none">
+              <span className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tighter leading-none transition-colors duration-200">
                 {totalLeads}
               </span>
-              <span className="text-[10px] font-bold text-slate-500 tracking-wider uppercase mt-1">
+              <span className="text-[10px] font-bold text-slate-500 dark:text-gray-400 tracking-wider uppercase mt-1 transition-colors duration-200">
                 Total Leads
               </span>
             </div>
@@ -107,7 +107,7 @@ function PieChartCard({ data }) {
 
       {/* Custom Legend to fulfill exact design specs: Won 34 (27%) */}
       {totalLeads > 0 && (
-        <div className="grid grid-cols-2 gap-x-4 gap-y-2 border-t border-slate-100 pt-4 mt-2">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-2 border-t border-slate-100 dark:border-gray-700 pt-4 mt-2 transition-colors duration-200">
           {data.map((item) => (
             <div key={item.name} className="flex items-center justify-between text-xs">
               <div className="flex items-center gap-2">
@@ -115,10 +115,10 @@ function PieChartCard({ data }) {
                   className="w-2.5 h-2.5 rounded-full shrink-0"
                   style={{ backgroundColor: STATUS_COLORS[item.name] || "#94A3B8" }}
                 />
-                <span className="font-semibold text-slate-700">{item.name}</span>
+                <span className="font-semibold text-slate-700 dark:text-gray-300">{item.name}</span>
               </div>
-              <span className="font-bold text-slate-900">
-                {item.value} <span className="text-slate-400 font-medium text-[10px] ml-0.5">({item.percentage}%)</span>
+              <span className="font-bold text-slate-900 dark:text-white">
+                {item.value} <span className="text-slate-400 dark:text-gray-500 font-medium text-[10px] ml-0.5">({item.percentage}%)</span>
               </span>
             </div>
           ))}

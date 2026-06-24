@@ -17,7 +17,7 @@ function NotFound() {
       <div className="relative mb-6">
         
         {/* Decorative red glowing circle with background opacity blur-2xl and scaling factor of 1.5 */}
-        <div className="absolute inset-0 bg-red-100 rounded-full blur-2xl opacity-50 scale-150"></div>
+        <div className="absolute inset-0 bg-red-100 dark:bg-red-950/40 rounded-full blur-2xl opacity-50 scale-150 transition-colors duration-200"></div>
         
         {/* Main icon layout frame featuring gradient background, drop shadows, and rounded visual borders */}
         <div className="relative bg-gradient-to-tr from-red-500 to-rose-500 text-white p-6 rounded-2xl shadow-xl shadow-red-500/20">
@@ -32,17 +32,17 @@ function NotFound() {
       </div>
 
       {/* Renders bold 404 error code layout text */}
-      <h1 className="text-8xl font-extrabold tracking-widest text-slate-800">
+      <h1 className="text-8xl font-extrabold tracking-widest text-slate-800 dark:text-white transition-colors duration-200">
         404
       </h1>
 
       {/* Renders descriptive header title text */}
-      <h2 className="mt-4 text-2xl font-bold text-slate-800">
+      <h2 className="mt-4 text-2xl font-bold text-slate-800 dark:text-white transition-colors duration-200">
         Page Not Found
       </h2>
 
       {/* Renders secondary instruction description to help the user resolve the issue */}
-      <p className="mt-2 text-slate-500 max-w-md mx-auto">
+      <p className="mt-2 text-slate-550 dark:text-gray-400 max-w-md mx-auto transition-colors duration-200">
         Sorry, the page you are looking for doesn't exist or has been moved to a new location.
       </p>
 

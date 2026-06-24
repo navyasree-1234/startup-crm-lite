@@ -127,7 +127,7 @@ function QuickActions({ leads = [], onAddLead }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm mt-6">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-slate-100 dark:border-gray-700 shadow-sm mt-6 transition-colors duration-200">
       {/* Title Header */}
       <div className="mb-5">
         <h2 className="text-lg font-bold text-text-dark">Quick Actions</h2>
@@ -150,7 +150,7 @@ function QuickActions({ leads = [], onAddLead }) {
         {/* Link shortcut navigating to CRM Table */}
         <Link
           to="/leads"
-          className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-xl text-sm font-semibold border border-slate-200/60 transition-all duration-200 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0"
+          className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-slate-50 dark:bg-gray-700 hover:bg-slate-100 dark:hover:bg-gray-600 text-slate-700 dark:text-gray-300 rounded-xl text-sm font-semibold border border-slate-200/60 dark:border-gray-600 transition-all duration-200 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0"
         >
           <span>View All Leads</span>
           <ArrowUpRight className="w-4 h-4" />
@@ -159,7 +159,7 @@ function QuickActions({ leads = [], onAddLead }) {
         {/* Client-side CSV generator trigger */}
         <button
           onClick={handleExportData}
-          className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-xl text-sm font-semibold border border-slate-200/60 transition-all duration-200 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+          className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-slate-50 dark:bg-gray-700 hover:bg-slate-100 dark:hover:bg-gray-600 text-slate-700 dark:text-gray-300 rounded-xl text-sm font-semibold border border-slate-200/60 dark:border-gray-600 transition-all duration-200 hover:shadow-sm hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
         >
           <Download className="w-4 h-4" />
           <span>Export Data</span>
@@ -172,17 +172,17 @@ function QuickActions({ leads = [], onAddLead }) {
           {/* Blurred Backdrop */}
           <div
             onClick={() => setIsOpen(false)}
-            className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300"
+            className="absolute inset-0 bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-sm transition-opacity duration-300"
           />
 
           {/* Dialog Container */}
-          <div className="relative bg-white w-full max-w-md p-6 rounded-2xl shadow-2xl border border-slate-100 animate-in fade-in zoom-in-95 duration-200">
+          <div className="relative bg-white dark:bg-gray-800 w-full max-w-md p-6 rounded-2xl shadow-2xl border border-slate-100 dark:border-gray-700 animate-in fade-in zoom-in-95 duration-200 transition-colors duration-200">
             {/* Modal Header */}
-            <div className="flex items-center justify-between mb-5 border-b border-slate-50 pb-3">
+            <div className="flex items-center justify-between mb-5 border-b border-slate-100 dark:border-gray-700 pb-3">
               <h3 className="text-lg font-bold text-text-dark">Quick Add Lead</h3>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors"
+                className="p-1.5 text-slate-400 dark:text-gray-400 hover:text-slate-600 dark:hover:text-white rounded-lg bg-slate-50 dark:bg-gray-700 hover:bg-slate-100 dark:hover:bg-gray-600 transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -208,7 +208,7 @@ function QuickActions({ leads = [], onAddLead }) {
                   placeholder="e.g. Sarah Connor"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="px-3.5 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-slate-50/50 font-medium"
+                  className="px-3.5 py-2.5 text-sm border border-slate-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-slate-50/50 dark:bg-gray-900/50 text-slate-800 dark:text-white font-medium"
                 />
               </div>
 
@@ -223,7 +223,7 @@ function QuickActions({ leads = [], onAddLead }) {
                   placeholder="e.g. Cyberdyne Systems"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
-                  className="px-3.5 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-slate-50/50 font-medium"
+                  className="px-3.5 py-2.5 text-sm border border-slate-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-slate-50/50 dark:bg-gray-900/50 text-slate-800 dark:text-white font-medium"
                 />
               </div>
 
@@ -237,7 +237,7 @@ function QuickActions({ leads = [], onAddLead }) {
                   placeholder="e.g. sarah@cyberdyne.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="px-3.5 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-slate-50/50 font-medium"
+                  className="px-3.5 py-2.5 text-sm border border-slate-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-slate-50/50 dark:bg-gray-900/50 text-slate-800 dark:text-white font-medium"
                 />
               </div>
 
@@ -253,7 +253,7 @@ function QuickActions({ leads = [], onAddLead }) {
                     placeholder="e.g. 15000"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
-                    className="px-3.5 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-slate-50/50 font-medium"
+                    className="px-3.5 py-2.5 text-sm border border-slate-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-slate-50/50 dark:bg-gray-900/50 text-slate-800 dark:text-white font-medium"
                   />
                 </div>
 
@@ -264,14 +264,14 @@ function QuickActions({ leads = [], onAddLead }) {
                   <select
                     value={status}
                     onChange={(e) => setStatus(e.target.value)}
-                    className="px-3 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-slate-50/50 font-semibold text-text-dark"
+                    className="px-3 py-2.5 text-sm border border-slate-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-slate-50/50 dark:bg-gray-900/50 font-semibold text-text-dark dark:text-white"
                   >
-                    <option value="New">New</option>
-                    <option value="Contacted">Contacted</option>
-                    <option value="Meeting Scheduled">Meeting Scheduled</option>
-                    <option value="Proposal Sent">Proposal Sent</option>
-                    <option value="Won">Won</option>
-                    <option value="Lost">Lost</option>
+                    <option value="New" className="dark:bg-gray-800">New</option>
+                    <option value="Contacted" className="dark:bg-gray-800">Contacted</option>
+                    <option value="Meeting Scheduled" className="dark:bg-gray-800">Meeting Scheduled</option>
+                    <option value="Proposal Sent" className="dark:bg-gray-800">Proposal Sent</option>
+                    <option value="Won" className="dark:bg-gray-800">Won</option>
+                    <option value="Lost" className="dark:bg-gray-800">Lost</option>
                   </select>
                 </div>
               </div>
@@ -284,23 +284,23 @@ function QuickActions({ leads = [], onAddLead }) {
                 <select
                   value={source}
                   onChange={(e) => setSource(e.target.value)}
-                  className="px-3 py-2.5 text-sm border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-slate-50/50 font-semibold text-text-dark"
+                  className="px-3 py-2.5 text-sm border border-slate-200 dark:border-gray-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary bg-slate-50/50 dark:bg-gray-900/50 font-semibold text-text-dark dark:text-white"
                 >
-                  <option value="Website">Website</option>
-                  <option value="Referral">Referral</option>
-                  <option value="LinkedIn">LinkedIn</option>
-                  <option value="Cold Call">Cold Call</option>
-                  <option value="Email Campaign">Email Campaign</option>
-                  <option value="Other">Other</option>
+                  <option value="Website" className="dark:bg-gray-800">Website</option>
+                  <option value="Referral" className="dark:bg-gray-800">Referral</option>
+                  <option value="LinkedIn" className="dark:bg-gray-800">LinkedIn</option>
+                  <option value="Cold Call" className="dark:bg-gray-800">Cold Call</option>
+                  <option value="Email Campaign" className="dark:bg-gray-800">Email Campaign</option>
+                  <option value="Other" className="dark:bg-gray-800">Other</option>
                 </select>
               </div>
 
               {/* Action buttons footer */}
-              <div className="flex justify-end gap-3 pt-4 border-t border-slate-50 mt-5">
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-gray-700 mt-5">
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="px-4 py-2.5 border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl hover:bg-slate-50 transition-colors cursor-pointer"
+                  className="px-4 py-2.5 border border-slate-200 dark:border-gray-700 text-slate-700 dark:text-gray-300 text-sm font-semibold rounded-xl hover:bg-slate-50 dark:hover:bg-gray-700 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>

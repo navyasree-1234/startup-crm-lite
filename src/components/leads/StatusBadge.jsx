@@ -1,4 +1,3 @@
-import React from "react";
 
 /**
  * StatusBadge Component
@@ -13,19 +12,19 @@ function StatusBadge({ status, className = "" }) {
   const getBadgeColors = (statusVal) => {
     switch (statusVal) {
       case "New":
-        return "bg-slate-100 text-slate-700 border-slate-200";
+        return "bg-slate-100 dark:bg-gray-700 text-slate-700 dark:text-gray-300 border-slate-200 dark:border-gray-600";
       case "Contacted":
-        return "bg-blue-50 text-blue-700 border-blue-100";
+        return "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-100 dark:border-blue-800/40";
       case "Meeting Scheduled":
-        return "bg-indigo-50 text-indigo-700 border-indigo-100";
+        return "bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 border-indigo-100 dark:border-indigo-800/40";
       case "Proposal Sent":
-        return "bg-amber-50 text-amber-700 border-amber-100";
+        return "bg-amber-50 dark:bg-amber-905/20 text-amber-700 dark:text-amber-400 border-amber-100 dark:border-amber-800/30";
       case "Won":
-        return "bg-emerald-50 text-emerald-700 border-emerald-100";
+        return "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-450 border-emerald-100 dark:border-emerald-800/40";
       case "Lost":
-        return "bg-rose-50 text-rose-700 border-rose-100";
+        return "bg-rose-50 dark:bg-rose-905/30 text-rose-700 dark:text-rose-400 border-rose-100 dark:border-rose-800/40";
       default:
-        return "bg-slate-50 text-slate-600 border-slate-100";
+        return "bg-slate-50 dark:bg-gray-750 text-slate-600 dark:text-gray-400 border-slate-100 dark:border-gray-700";
     }
   };
 

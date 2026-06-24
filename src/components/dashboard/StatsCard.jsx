@@ -54,7 +54,7 @@ function StatsCard({ title, value, icon: Icon, change, color = "primary" }) {
   }
 
   return (
-    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 flex flex-col justify-between">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-slate-100 dark:border-gray-700 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 flex flex-col justify-between">
       {/* Header containing title and icon */}
       <div className="flex items-center justify-between mb-4">
         <span className="text-sm font-semibold text-text-gray tracking-wide uppercase">

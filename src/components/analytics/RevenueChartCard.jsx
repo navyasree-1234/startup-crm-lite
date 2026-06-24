@@ -8,6 +8,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import { useTheme } from "../../context/ThemeContext";
 
 // Helper to format currency in Indian Rupees format (en-IN)
 const formatINR = (value) => {
@@ -30,20 +31,21 @@ const formatCompactINR = (val) => {
 };
 
 function RevenueChartCard({ data }) {
+  const { isDarkMode } = useTheme();
   const totalRevenue = data.reduce((sum, d) => sum + d["Won Revenue"], 0);
 
   return (
-    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm transition-all hover:shadow-md flex flex-col justify-between h-full min-h-[380px]">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-slate-200 dark:border-gray-700 shadow-sm transition-all hover:shadow-md flex flex-col justify-between h-full min-h-[380px] transition-colors duration-200">
       <div>
         <div className="flex justify-between items-start">
           <div>
-            <h3 className="text-lg font-bold text-slate-900 tracking-tight">Revenue Analytics</h3>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white tracking-tight transition-colors duration-200">Revenue Analytics</h3>
+            <p className="text-xs text-slate-500 dark:text-gray-400 mt-0.5 transition-colors duration-200">
               Won revenue trends tracked monthly for closed leads
             </p>
           </div>
           {totalRevenue > 0 && (
-            <div className="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-lg text-xs font-bold shrink-0">
+            <div className="bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 px-2.5 py-1 rounded-lg text-xs font-bold shrink-0 transition-colors duration-200">
               Total Won: {formatINR(totalRevenue)}
             </div>
           )}
@@ -52,7 +54,7 @@ function RevenueChartCard({ data }) {
 
       <div className="h-[230px] w-full mt-6">
         {totalRevenue === 0 ? (
-          <div className="h-full flex items-center justify-center text-slate-400 text-sm font-medium">
+          <div className="h-full flex items-center justify-center text-slate-400 dark:text-gray-500 text-sm font-medium">
             No won revenue generated in this timeframe
           </div>
         ) : (
@@ -70,11 +72,11 @@ function RevenueChartCard({ data }) {
               <CartesianGrid
                 strokeDasharray="4 4"
                 vertical={false}
-                stroke="#E2E8F0"
+                stroke={isDarkMode ? "#374151" : "#E2E8F0"}
               />
               <XAxis
                 dataKey="name"
-                stroke="#64748B"
+                stroke={isDarkMode ? "#9CA3AF" : "#64748B"}
                 fontSize={11}
                 fontWeight={500}
                 tickLine={false}
@@ -82,7 +84,7 @@ function RevenueChartCard({ data }) {
                 dy={8}
               />
               <YAxis
-                stroke="#64748B"
+                stroke={isDarkMode ? "#9CA3AF" : "#64748B"}
                 fontSize={11}
                 fontWeight={500}
                 tickLine={false}
@@ -95,11 +97,11 @@ function RevenueChartCard({ data }) {
                   if (active && payload && payload.length) {
                     const item = payload[0].payload;
                     return (
-                      <div className="bg-white p-3 border border-slate-100 rounded-xl shadow-lg animate-in fade-in zoom-in-95 duration-100">
-                        <p className="text-xs font-bold text-slate-900 mb-0.5">
+                      <div className="bg-white dark:bg-gray-800 p-3 border border-slate-100 dark:border-gray-700 rounded-xl shadow-lg animate-in fade-in zoom-in-95 duration-100 transition-colors duration-200">
+                        <p className="text-xs font-bold text-slate-900 dark:text-white mb-0.5">
                           {item.fullName} Revenue
                         </p>
-                        <p className="text-sm font-bold text-emerald-600">
+                        <p className="text-sm font-bold text-emerald-600 dark:text-emerald-450 font-bold">
                           {formatINR(item["Won Revenue"])}
                         </p>
                       </div>

@@ -38,18 +38,18 @@ function RecentLeads({ leads = [] }) {
   const getStatusStyles = (status) => {
     switch (status) {
       case "Won":
-        return "bg-success/15 text-success border-success/30";
+        return "bg-success/15 text-success border-success/30 dark:bg-success/20 dark:text-emerald-450 dark:border-success/40";
       case "Lost":
-        return "bg-danger/15 text-danger border-danger/30";
+        return "bg-danger/15 text-danger border-danger/30 dark:bg-danger/20 dark:text-rose-450 dark:border-danger/40";
       case "Proposal Sent":
-        return "bg-warning/15 text-warning border-warning/30";
+        return "bg-warning/15 text-warning border-warning/30 dark:bg-warning/20 dark:text-amber-450 dark:border-warning/40";
       case "Contacted":
-        return "bg-primary/15 text-primary border-primary/30";
+        return "bg-primary/15 text-primary border-primary/30 dark:bg-primary/20 dark:text-blue-450 dark:border-primary/40";
       case "Meeting Scheduled":
-        return "bg-indigo-50 text-indigo-700 border-indigo-200/60";
+        return "bg-indigo-50 text-indigo-700 border-indigo-200/60 dark:bg-indigo-900/30 dark:text-indigo-400 dark:border-indigo-800/40";
       case "New":
       default:
-        return "bg-slate-100 text-slate-600 border-slate-200";
+        return "bg-slate-100 text-slate-600 border-slate-200 dark:bg-gray-700 dark:text-gray-350 dark:border-gray-650";
     }
   };
 
@@ -84,7 +84,7 @@ function RecentLeads({ leads = [] }) {
   };
 
   return (
-    <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between h-full">
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-slate-100 dark:border-gray-700 shadow-sm flex flex-col justify-between h-full transition-colors duration-200">
       {/* Widget Header */}
       <div className="mb-6">
         <h2 className="text-lg font-bold text-text-dark">Recent Leads</h2>
@@ -98,27 +98,27 @@ function RecentLeads({ leads = [] }) {
         {recentLeads.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <p className="text-sm text-text-gray font-semibold">No recent leads found</p>
-            <p className="text-xs text-slate-400 mt-1">Try adding a new lead using Quick Actions!</p>
+            <p className="text-xs text-slate-400 dark:text-gray-500 mt-1">Try adding a new lead using Quick Actions!</p>
           </div>
         ) : (
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-slate-100 text-[10px] font-bold text-text-gray tracking-wider uppercase">
+              <tr className="border-b border-slate-100 dark:border-gray-700 text-[10px] font-bold text-text-gray tracking-wider uppercase">
                 <th className="pb-3 pl-2">Lead</th>
                 <th className="pb-3">Company</th>
                 <th className="pb-3">Status</th>
                 <th className="pb-3 pr-2">Date Added</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50 text-sm">
+            <tbody className="divide-y divide-slate-50 dark:divide-gray-750 text-sm">
               {recentLeads.map((lead) => (
                 <tr
                   key={lead.id}
-                  className="hover:bg-slate-50/50 transition-colors duration-150"
+                  className="hover:bg-slate-50/50 dark:hover:bg-gray-700/30 transition-colors duration-150"
                 >
                   {/* Lead Info Cell with Avatar circle */}
                   <td className="py-3.5 pl-2 flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-slate-100 border border-slate-200/40 flex items-center justify-center text-xs font-bold text-slate-600 shadow-sm">
+                    <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-gray-750 border border-slate-200/40 dark:border-gray-650 flex items-center justify-center text-xs font-bold text-slate-600 dark:text-gray-300 shadow-sm transition-colors duration-200">
                       {getInitials(lead.name)}
                     </div>
                     <div className="flex flex-col">
