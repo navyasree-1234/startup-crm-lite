@@ -11,24 +11,24 @@ function DarkModeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="relative flex items-center justify-between w-14 h-8 bg-slate-200 dark:bg-gray-700 rounded-full p-1 cursor-pointer transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 shadow-inner"
+      className="relative flex items-center justify-between w-16 h-11 md:w-14 md:h-8 bg-slate-200 dark:bg-gray-700 rounded-full p-1.5 md:p-1 cursor-pointer transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 shadow-inner"
       aria-label="Toggle theme mode"
     >
       {/* Sliding Knob */}
       <span
-        className={`absolute top-1 left-1 w-6 h-6 rounded-full bg-white dark:bg-gray-900 shadow-md transition-transform duration-300 ease-in-out ${
-          isDarkMode ? "translate-x-6" : "translate-x-0"
+        className={`absolute top-1.5 md:top-1 left-1.5 md:left-1 w-8 h-8 md:w-6 md:h-6 rounded-full bg-white dark:bg-gray-900 shadow-md transition-transform duration-300 ease-in-out ${
+          isDarkMode ? "translate-x-5 md:translate-x-6" : "translate-x-0"
         }`}
       />
       
       {/* Icons */}
       <Sun
-        className={`w-4 h-4 text-amber-500 z-10 ml-1 transition-opacity duration-300 ${
+        className={`w-5 h-5 md:w-4 md:h-4 text-amber-500 z-10 ml-1 transition-opacity duration-300 ${
           isDarkMode ? "opacity-30" : "opacity-100"
         }`}
       />
       <Moon
-        className={`w-4 h-4 text-indigo-400 z-10 mr-1 transition-opacity duration-300 ${
+        className={`w-5 h-5 md:w-4 md:h-4 text-indigo-400 z-10 mr-1 transition-opacity duration-300 ${
           isDarkMode ? "opacity-100" : "opacity-30"
         }`}
       />

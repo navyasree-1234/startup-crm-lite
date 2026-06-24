@@ -66,31 +66,31 @@ function Analytics() {
           <StatsCards kpis={kpis} />
 
           {/* Section 3: Pie Chart & Funnel Chart */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <PieChartCard data={chartsData.statusDistribution} />
             <FunnelChartCard data={chartsData.funnelData} />
           </div>
 
           {/* Section 4: Monthly Leads Bar & Conversion Line Charts */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <BarChartCard data={chartsData.monthlyLeads} />
             <LineChartCard data={chartsData.conversionTrend} />
           </div>
 
           {/* Section 5: Revenue Area & Lead Source Charts */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <RevenueChartCard data={chartsData.revenueTrend} />
             <LeadSourceChart data={chartsData.leadSources} />
           </div>
 
           {/* Section 6: Activity Heatmap & Top Performers leaderboard */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <ActivityHeatmap data={chartsData.activityHeatmap} />
             <TopPerformersCard data={chartsData.topPerformers} />
           </div>
 
           {/* Section 7: Revenue Forecast & Sales Velocity Widgets */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <ForecastCard data={chartsData.revenueForecast} />
             <SalesVelocityCard data={dataSalesVelocityAdapter(chartsData.salesVelocity)} />
           </div>

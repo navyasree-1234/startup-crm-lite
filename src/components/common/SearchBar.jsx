@@ -68,15 +68,15 @@ function SearchBar({ value, onChange }) {
         className="w-full pl-10 pr-10 py-2.5 text-sm font-medium border border-slate-200 dark:border-gray-700 rounded-xl focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-500/10 bg-slate-50/50 dark:bg-gray-905/30 hover:bg-slate-50 dark:hover:bg-gray-800 focus:bg-white dark:focus:bg-gray-850 text-slate-800 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-200"
       />
 
-      {/* Clear 'X' Button */}
+      {/* Clear 'X' Button: Touch-friendly sizing on mobile, compact on desktop */}
       {localValue && (
         <button
           type="button"
           onClick={handleClear}
           aria-label="Clear search"
-          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 dark:text-gray-400 hover:text-slate-650 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-200 dark:focus:ring-gray-700"
+          className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 p-3 md:p-1.5 text-slate-400 dark:text-gray-400 hover:text-slate-650 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-slate-200 dark:focus:ring-gray-700"
         >
-          <X className="w-4 h-4" />
+          <X className="w-5 h-5 md:w-4 md:h-4" />
         </button>
       )}
     </div>

@@ -33,7 +33,7 @@ function LoadingSkeleton() {
       </div>
 
       {/* KPI Cards Row (6 columns) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-5">
         {[...Array(6)].map((_, i) => (
           <div key={`kpi-sk-${i}`} className="bg-white dark:bg-gray-800 p-6 rounded-2xl border border-slate-200 dark:border-gray-700 shadow-sm flex flex-col justify-between h-[115px] transition-colors duration-200">
             <div className="flex justify-between items-start">
@@ -49,27 +49,27 @@ function LoadingSkeleton() {
       </div>
 
       {/* Grid Layouts mimicking the Dashboard Sections */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <SkeletonCard className="h-[380px]" />
         <SkeletonCard className="h-[380px]" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <SkeletonCard className="h-[380px]" />
         <SkeletonCard className="h-[380px]" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <SkeletonCard className="h-[380px]" />
         <SkeletonCard className="h-[380px]" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <SkeletonCard className="h-[340px]" />
         <SkeletonCard className="h-[340px]" />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <SkeletonCard className="h-[340px]" />
         <SkeletonCard className="h-[340px]" />
       </div>

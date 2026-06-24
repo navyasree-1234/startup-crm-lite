@@ -82,7 +82,7 @@ function StatsCards({ kpis }) {
   const lostRatePos = lostRate.change <= 0; // Lower is better!
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5">
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-5">
       {/* Total Leads */}
       <KPICard
         title="Total Leads"

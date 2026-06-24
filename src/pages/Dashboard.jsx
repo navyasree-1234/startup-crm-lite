@@ -80,7 +80,7 @@ function Dashboard() {
 
       {/* Grid of 4 Key Stats Cards */}
       {/* Responsive columns: 1 on mobile, 2 on tablet, 4 on desktop */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* Total Leads */}
         <StatsCard
           title="Total Leads"

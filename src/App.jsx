@@ -30,8 +30,8 @@ function App() {
             {/* Main content wrapper stretching across available space and handling vertical scrolling */}
             <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
               
-              {/* Scrollable page container area with standard padding */}
-              <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 dark:bg-gray-900 p-4 sm:p-6 md:p-8 transition-colors duration-200">
+              {/* Scrollable page container area with standard padding and bottom nav bar spacing on mobile */}
+              <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 dark:bg-gray-900 p-4 sm:p-6 md:p-8 pb-24 md:pb-8 transition-colors duration-200">
                 
                 {/* Limit maximum width of the content for cleaner premium desktop readability */}
                 <div className="max-w-7xl mx-auto">

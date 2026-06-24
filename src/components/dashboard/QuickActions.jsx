@@ -168,23 +168,23 @@ function QuickActions({ leads = [], onAddLead }) {
 
       {/* Modern Dialog Modal Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Blurred Backdrop */}
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4 bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
+          {/* Backdrop (only useful on desktop/tablet since it's hidden under container on mobile) */}
           <div
             onClick={() => setIsOpen(false)}
-            className="absolute inset-0 bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-sm transition-opacity duration-300"
+            className="hidden md:block absolute inset-0 transition-opacity duration-300"
           />
 
-          {/* Dialog Container */}
-          <div className="relative bg-white dark:bg-gray-800 w-full max-w-md p-6 rounded-2xl shadow-2xl border border-slate-100 dark:border-gray-700 animate-in fade-in zoom-in-95 duration-200 transition-colors duration-200">
+          {/* Dialog Container: Full-screen on mobile, centered modal with max-w-lg on tablet+ */}
+          <div className="relative bg-white dark:bg-gray-800 w-full h-full md:h-auto md:max-w-lg p-6 rounded-none md:rounded-2xl shadow-2xl border-0 md:border border-slate-100 dark:border-gray-700 overflow-y-auto md:overflow-visible animate-in fade-in md:zoom-in-95 duration-200 transition-colors duration-200">
             {/* Modal Header */}
             <div className="flex items-center justify-between mb-5 border-b border-slate-100 dark:border-gray-700 pb-3">
               <h3 className="text-lg font-bold text-text-dark">Quick Add Lead</h3>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-1.5 text-slate-400 dark:text-gray-400 hover:text-slate-600 dark:hover:text-white rounded-lg bg-slate-50 dark:bg-gray-700 hover:bg-slate-100 dark:hover:bg-gray-600 transition-colors"
+                className="p-3 md:p-1.5 text-slate-400 dark:text-gray-400 hover:text-slate-650 dark:hover:text-white rounded-xl bg-slate-50 dark:bg-gray-700 hover:bg-slate-100 dark:hover:bg-gray-600 transition-colors cursor-pointer"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5.5 h-5.5 md:w-4 md:h-4" />
               </button>
             </div>
 

@@ -41,7 +41,7 @@ function FilterBar({ activeFilter, onFilterChange, leads = [] }) {
           <button
             key={stage}
             onClick={() => onFilterChange(stage)}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 whitespace-nowrap ${
+            className={`px-3.5 py-3 md:py-1.5 rounded-xl text-xs font-semibold border transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 whitespace-nowrap ${
               isActive
                 ? "bg-blue-600 border-blue-600 text-white shadow-sm shadow-blue-500/10"
                 : "bg-white dark:bg-gray-850 border-slate-200/80 dark:border-gray-700 text-slate-600 dark:text-gray-300 hover:text-slate-800 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-gray-700"

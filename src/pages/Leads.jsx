@@ -3,7 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 // Import Context to hook into state operations
 import { LeadContext } from "../context/LeadContext";
 // Import Lucide React icons for buttons, headers, search, and view toggling
-import { Plus, LayoutGrid, Table } from "lucide-react";
+import { Plus, LayoutGrid, Table, X } from "lucide-react";
 // Import Custom Components
 import LeadForm from "../components/leads/LeadForm";
 import LeadCard from "../components/leads/LeadCard";
@@ -142,134 +142,150 @@ function Leads() {
         </button>
       </div>
 
-      {/* Filter Toolbar Panel */}
-      <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-slate-100 dark:border-gray-700 shadow-sm space-y-4 transition-colors duration-200">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-          
-          {/* Custom SearchBar component */}
-          <SearchBar value={searchQuery} onChange={setSearchQuery} />
+  {/* Filter Toolbar Panel */}
+  <div className="bg-white dark:bg-gray-800 p-5 rounded-xl border border-slate-100 dark:border-gray-700 shadow-sm space-y-4 transition-colors duration-200">
+    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+      
+      {/* Custom SearchBar component */}
+      <SearchBar value={searchQuery} onChange={setSearchQuery} />
 
-          <div className="flex flex-wrap items-center gap-3">
-            {/* Layout View Toggle buttons */}
-            <div className="flex items-center gap-1 bg-slate-100 dark:bg-gray-700 p-1 rounded-xl border border-slate-200/40 dark:border-gray-600 transition-colors duration-200">
-              <button
-                onClick={() => setViewMode("card")}
-                className={`p-1.5 rounded-lg transition-all duration-200 cursor-pointer ${
-                  viewMode === "card"
-                    ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-450 shadow-sm"
-                    : "text-slate-500 dark:text-gray-400 hover:text-slate-750 dark:hover:text-white"
-                }`}
-                title="Card Grid View"
-                aria-label="Switch to Card Grid View"
-              >
-                <LayoutGrid className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setViewMode("table")}
-                className={`p-1.5 rounded-lg transition-all duration-200 cursor-pointer ${
-                  viewMode === "table"
-                    ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-450 shadow-sm"
-                    : "text-slate-500 dark:text-gray-400 hover:text-slate-750 dark:hover:text-white"
-                }`}
-                title="Table List View"
-                aria-label="Switch to Table List View"
-              >
-                <Table className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Custom FilterBar component */}
-        <div className="pt-4 border-t border-slate-100 dark:border-gray-700">
-          <FilterBar
-            activeFilter={activeFilter}
-            onFilterChange={setActiveFilter}
-            leads={leads}
-          />
+      {/* Layout View Toggle buttons (only visible on tablet viewports: md:flex lg:hidden) */}
+      <div className="hidden md:flex lg:hidden items-center gap-3">
+        <div className="flex items-center gap-1 bg-slate-100 dark:bg-gray-700 p-1 rounded-xl border border-slate-200/40 dark:border-gray-600 transition-colors duration-200">
+          <button
+            onClick={() => setViewMode("card")}
+            className={`p-2.5 rounded-lg transition-all duration-200 cursor-pointer ${
+              viewMode === "card"
+                ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-450 shadow-sm"
+                : "text-slate-500 dark:text-gray-400 hover:text-slate-750 dark:hover:text-white"
+            }`}
+            title="Card Grid View"
+            aria-label="Switch to Card Grid View"
+          >
+            <LayoutGrid className="w-4.5 h-4.5" />
+          </button>
+          <button
+            onClick={() => setViewMode("table")}
+            className={`p-2.5 rounded-lg transition-all duration-200 cursor-pointer ${
+              viewMode === "table"
+                ? "bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-450 shadow-sm"
+                : "text-slate-500 dark:text-gray-400 hover:text-slate-750 dark:hover:text-white"
+            }`}
+            title="Table List View"
+            aria-label="Switch to Table List View"
+          >
+            <Table className="w-4.5 h-4.5" />
+          </button>
         </div>
       </div>
 
-      {/* Main content display section */}
-      {filteredLeads.length === 0 ? (
-        <EmptyState
-          totalCount={leads.length}
-          filteredCount={filteredLeads.length}
-          onClearFilters={() => {
-            setSearchQuery("");
-            setActiveFilter("All");
-          }}
-        />
-      ) : (
-        <>
-          {/* Card View Layout */}
-          {viewMode === "card" && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredLeads.map((lead) => (
-                <LeadCard
-                  key={lead.id}
-                  lead={lead}
-                  onEdit={handleEditClick}
-                  onDelete={handleDeleteLead}
-                />
-              ))}
-            </div>
-          )}
+    </div>
 
-          {/* Table View Layout (Responsive: table on desktop, cards on mobile) */}
-          {viewMode === "table" && (
-            <>
-              {/* Desktop Table View */}
-              <div className="hidden md:block bg-white dark:bg-gray-800 rounded-xl border border-slate-100 dark:border-gray-700 shadow-sm overflow-hidden transition-colors duration-200">
-                <LeadTable
-                  leads={filteredLeads}
-                  onEdit={handleEditClick}
-                  onDelete={handleDeleteLead}
-                />
-              </div>
+    {/* Custom FilterBar component */}
+    <div className="pt-4 border-t border-slate-100 dark:border-gray-700">
+      <FilterBar
+        activeFilter={activeFilter}
+        onFilterChange={setActiveFilter}
+        leads={leads}
+      />
+    </div>
+  </div>
 
-              {/* Mobile Card Stack View */}
-              <div className="md:hidden grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {filteredLeads.map((lead) => (
-                  <LeadCard
-                    key={lead.id}
-                    lead={lead}
-                    onEdit={handleEditClick}
-                    onDelete={handleDeleteLead}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-        </>
-      )}
+  {/* Main content display section */}
+  {filteredLeads.length === 0 ? (
+    <EmptyState
+      totalCount={leads.length}
+      filteredCount={filteredLeads.length}
+      onClearFilters={() => {
+        setSearchQuery("");
+        setActiveFilter("All");
+      }}
+    />
+  ) : (
+    <>
+      {/* Mobile View: Card View Only (hidden on tablet+) */}
+      <div className="block md:hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {filteredLeads.map((lead) => (
+            <LeadCard
+              key={lead.id}
+              lead={lead}
+              onEdit={handleEditClick}
+              onDelete={handleDeleteLead}
+            />
+          ))}
+        </div>
+      </div>
 
-      {/* Lead Form Modal Overlay */}
-      {isModalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="modal-title"
-        >
-          {/* Form container body */}
-          <div className="relative bg-white dark:bg-gray-800 w-full max-w-lg p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-100 dark:border-gray-700 animate-in fade-in zoom-in-95 duration-150 transition-colors duration-200">
-            <h3
-              id="modal-title"
-              className="text-xl font-bold text-slate-800 dark:text-white mb-5 pb-3 border-b border-slate-100 dark:border-gray-700"
-            >
-              {selectedLead ? "Edit Lead Details" : "Add New CRM Lead"}
-            </h3>
-
-            <LeadForm
-              initialData={selectedLead}
-              onSubmit={handleFormSubmit}
-              onCancel={handleCloseModal}
+      {/* Tablet View: Hybrid, toggle between card and table (hidden on mobile and desktop) */}
+      <div className="hidden md:block lg:hidden">
+        {viewMode === "card" ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {filteredLeads.map((lead) => (
+              <LeadCard
+                key={lead.id}
+                lead={lead}
+                onEdit={handleEditClick}
+                onDelete={handleDeleteLead}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="bg-white dark:bg-gray-800 rounded-xl border border-slate-100 dark:border-gray-700 shadow-sm overflow-x-auto transition-colors duration-200">
+            <LeadTable
+              leads={filteredLeads}
+              onEdit={handleEditClick}
+              onDelete={handleDeleteLead}
             />
           </div>
+        )}
+      </div>
+
+      {/* Desktop View: Full table view with all columns visible (hidden on mobile/tablet) */}
+      <div className="hidden lg:block bg-white dark:bg-gray-800 rounded-xl border border-slate-100 dark:border-gray-700 shadow-sm overflow-hidden transition-colors duration-200">
+        <LeadTable
+          leads={filteredLeads}
+          onEdit={handleEditClick}
+          onDelete={handleDeleteLead}
+        />
+      </div>
+    </>
+  )}
+
+  {/* Lead Form Modal Overlay */}
+  {isModalOpen && (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-4 bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
+      {/* Form container body: Full-screen on mobile, centered modal with max-w-lg on tablet+ */}
+      <div className="relative bg-white dark:bg-gray-800 w-full h-full md:h-auto md:max-w-lg p-6 sm:p-8 rounded-none md:rounded-2xl shadow-2xl border-0 md:border border-slate-100 dark:border-gray-700 overflow-y-auto md:overflow-visible animate-in fade-in md:zoom-in-95 duration-150 transition-colors duration-200">
+        <div className="flex items-center justify-between mb-5 pb-3 border-b border-slate-100 dark:border-gray-700">
+          <h3
+            id="modal-title"
+            className="text-xl font-bold text-slate-800 dark:text-white"
+          >
+            {selectedLead ? "Edit Lead Details" : "Add New CRM Lead"}
+          </h3>
+          <button
+            onClick={handleCloseModal}
+            className="p-3 md:p-1.5 text-slate-400 dark:text-gray-450 hover:text-slate-650 dark:hover:text-white rounded-xl bg-slate-50 dark:bg-gray-700 hover:bg-slate-100 dark:hover:bg-gray-600 transition-colors cursor-pointer"
+            aria-label="Close modal"
+          >
+            <X className="w-5.5 h-5.5" />
+          </button>
         </div>
-      )}
+
+        <LeadForm
+          initialData={selectedLead}
+          onSubmit={handleFormSubmit}
+          onCancel={handleCloseModal}
+        />
+      </div>
+    </div>
+  )}
     </div>
   );
 }
