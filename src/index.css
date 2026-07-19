@@ -5,23 +5,82 @@
 @theme {
   --font-roboto: "Roboto", sans-serif;
 
-  --color-primary: #2563EB;
-  --color-success: #22C55E;
+  --color-primary: #8B5CF6;
+  --color-success: #10B981;
   --color-warning: #F59E0B;
   --color-danger: #EF4444;
 
-  --color-background: #F8FAFC;
+  --color-background: #F8F7FF;
   --color-card: #FFFFFF;
 
-  --color-text-dark: #0F172A;
-  --color-text-gray: #64748B;
+  --color-text-dark: #1C134A;
+  --color-text-gray: #6A5FA6;
+
+  /* Override Blue scale to brand color (Royal Amethyst) */
+  --color-blue-50: #F5F3FF;
+  --color-blue-100: #EDE9FE;
+  --color-blue-200: #DDD6FE;
+  --color-blue-300: #C4B5FD;
+  --color-blue-400: #A78BFA;
+  --color-blue-500: #8B5CF6;
+  --color-blue-600: #7C3AED;
+  --color-blue-700: #6D28D9;
+  --color-blue-800: #5B21B6;
+  --color-blue-900: #4C1D95;
+  --color-blue-950: #2E1065;
+
+  /* Override Indigo scale to brand color (Royal Amethyst) */
+  --color-indigo-50: #F5F3FF;
+  --color-indigo-100: #EDE9FE;
+  --color-indigo-200: #DDD6FE;
+  --color-indigo-300: #C4B5FD;
+  --color-indigo-400: #A78BFA;
+  --color-indigo-500: #8B5CF6;
+  --color-indigo-600: #7C3AED;
+  --color-indigo-700: #6D28D9;
+  --color-indigo-800: #5B21B6;
+  --color-indigo-900: #4C1D95;
+  --color-indigo-950: #2E1065;
+
+  /* Override Slate scale to premium Lavender-Slate colors in light mode */
+  --color-slate-50: #F8F7FF;
+  --color-slate-100: #F1EDFF;
+  --color-slate-150: #EBE8FC;
+  --color-slate-200: #E4E0FC;
+  --color-slate-300: #CBD5E1;
+  --color-slate-400: #978DCD;
+  --color-slate-500: #6A5FA6;
+  --color-slate-600: #544899;
+  --color-slate-650: #493E8F;
+  --color-slate-700: #3F347F;
+  --color-slate-800: #1C134A;
+  --color-slate-900: #120A33;
+
+  /* Custom badge color variables */
+  --color-emerald-450: #34D399;
+  --color-rose-905: #3F0C0F;
+  --color-amber-905: #422006;
 }
 
 @layer theme {
   .dark {
-    --color-background: #0F172A;
-    --color-card: #1E293B;
-    --color-text-dark: #F8FAFC;
-    --color-text-gray: #94A3B8;
+    --color-background: #080410;
+    --color-card: #100A1C;
+    --color-text-dark: #FAF9FF;
+    --color-text-gray: #9187B0;
+
+    /* Override Gray scale to obsidian-purple inside dark mode */
+    --color-gray-50: #FDFDFF;
+    --color-gray-100: #F4F1FB;
+    --color-gray-200: #E5E1F4;
+    --color-gray-300: #C7C0E4;
+    --color-gray-400: #A79ECC;
+    --color-gray-500: #8C80B7;
+    --color-gray-600: #5C5283;
+    --color-gray-700: #3C335E;
+    --color-gray-750: #271E44;
+    --color-gray-800: #100A1C;
+    --color-gray-900: #080410;
+    --color-gray-950: #040209;
   }
 }

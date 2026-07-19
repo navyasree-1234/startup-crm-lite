@@ -1,51 +1,74 @@
 
-// Import BrowserRouter from react-router-dom to enable routing capabilities across the app
-import { BrowserRouter } from "react-router-dom";
+// Import BrowserRouter, useLocation, and routing components from react-router-dom
+import { BrowserRouter, useLocation } from "react-router-dom";
 
-// Import the Navbar component which acts as our responsive sidebar navigation
+// Import global toast styling component
+import { Toaster } from "react-hot-toast";
+
+// Import Navbar sidebar navigation
 import Navbar from "./components/common/Navbar";
 
-// Import the AppRoutes component which defines all our lazy loaded routes
+// Import AppRoutes router container
 import AppRoutes from "./routes";
 
-// Import LeadProvider to provide core lead/activity context state across all pages
+// Import providers
 import { LeadProvider } from "./context/LeadContext";
-
-// Import ThemeProvider for dark mode context
 import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
+
+/**
+ * AppContent component handles the layout routing state.
+ * Conditionally hides the sidebar Navbar when the user is on /login or /register.
+ */
+function AppContent() {
+  const location = useLocation();
+  
+  // Identify if we are currently visiting login or registration screens
+  const isAuthPage = ["/login", "/register"].includes(location.pathname);
+
+  // If on an authentication page, render a clean minimalist card view without navbars
+  if (isAuthPage) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-gray-950 font-roboto text-slate-800 dark:text-white transition-colors duration-200">
+        <AppRoutes />
+      </div>
+    );
+  }
+
+  // Otherwise, render the standard side-by-side CRM dashboard console frame
+  return (
+    <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 dark:bg-gray-950 font-roboto text-slate-800 dark:text-white transition-colors duration-200">
+      
+      {/* Sidebar Navbar */}
+      <Navbar />
+
+      {/* Main console content canvas */}
+      <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 dark:bg-gray-900 p-4 sm:p-6 md:p-8 pb-24 md:pb-8 transition-colors duration-200">
+          <div className="max-w-7xl mx-auto">
+            <AppRoutes />
+          </div>
+        </main>
+      </div>
+    </div>
+  );
+}
 
 // App component is the root element representing the base layout of Startup CRM Lite
 function App() {
   return (
-    // Wrap entire layout in ThemeProvider, LeadProvider and BrowserRouter so theme, context and routing are available globally
     <ThemeProvider>
-      <LeadProvider>
-        <BrowserRouter>
-          {/* Outer flex container setting up split screen layout with light grey background */}
-          <div className="flex flex-col md:flex-row min-h-screen bg-slate-50 dark:bg-gray-950 font-roboto text-slate-800 dark:text-white transition-colors duration-200">
-            
-            {/* Render the sidebar Navbar component on the left side of screen */}
-            <Navbar />
-
-            {/* Main content wrapper stretching across available space and handling vertical scrolling */}
-            <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-              
-              {/* Scrollable page container area with standard padding and bottom nav bar spacing on mobile */}
-              <main className="flex-1 overflow-x-hidden overflow-y-auto bg-slate-50 dark:bg-gray-900 p-4 sm:p-6 md:p-8 pb-24 md:pb-8 transition-colors duration-200">
-                
-                {/* Limit maximum width of the content for cleaner premium desktop readability */}
-                <div className="max-w-7xl mx-auto">
-                  {/* AppRoutes acts as the route outlet, loading lazy pages inside Suspense fallbacks */}
-                  <AppRoutes />
-                </div>
-              </main>
-            </div>
-          </div>
-        </BrowserRouter>
-      </LeadProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <LeadProvider>
+            {/* Render global toaster for notifications on any screen */}
+            <Toaster position="top-right" reverseOrder={false} />
+            <AppContent />
+          </LeadProvider>
+        </AuthProvider>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
 
-// Export the App component as the default export of this file
 export default App;

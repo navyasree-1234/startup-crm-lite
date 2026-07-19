@@ -29,14 +29,14 @@ const SOURCE_OPTIONS = [
  * @param {Function} props.onCancel - Callback function triggered on form cancellation
  */
 function LeadForm({ initialData, onSubmit, onCancel }) {
-  // State variables for form fields
-  const [name, setName] = useState("");
-  const [company, setCompany] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [value, setValue] = useState("");
-  const [status, setStatus] = useState("New");
-  const [source, setSource] = useState("Website");
+  // State variables for form fields initialized with initialData values if present
+  const [name, setName] = useState(initialData?.name || "");
+  const [company, setCompany] = useState(initialData?.company || "");
+  const [email, setEmail] = useState(initialData?.email || "");
+  const [phone, setPhone] = useState(initialData?.phone || "");
+  const [value, setValue] = useState(initialData?.value !== undefined ? initialData.value : "");
+  const [status, setStatus] = useState(initialData?.status || "New");
+  const [source, setSource] = useState(initialData?.source || "Website");
 
   // State variables for inline validation error messages
   const [errors, setErrors] = useState({

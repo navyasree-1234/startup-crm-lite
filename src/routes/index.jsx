@@ -1,20 +1,41 @@
 // Import standard React APIs for dynamic imports (lazy) and async boundary loading wrapper (Suspense)
 import { lazy, Suspense } from "react";
 
-// Import key React Router DOM v6 components: Routes container and individual Route mapping component
-import { Routes, Route } from "react-router-dom";
+// Import key React Router DOM components
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 
-// Declare Dashboard component through React.lazy to enable dynamic chunk division and load it on-demand for path '/'
+// Import custom hook to check authentication status
+import { useAuth } from "../context/AuthContext";
+
+// Declare page components through React.lazy to enable dynamic chunk division
 const Dashboard = lazy(() => import("../pages/Dashboard"));
-
-// Declare Leads component through React.lazy to enable dynamic chunk division and load it on-demand for path '/leads'
 const Leads = lazy(() => import("../pages/Leads"));
-
-// Declare Analytics component through React.lazy to enable dynamic chunk division and load it on-demand for path '/analytics'
 const Analytics = lazy(() => import("../pages/Analytics"));
-
-// Declare NotFound component through React.lazy to load the 404 page dynamically for all unmatched URL pathways
+const Login = lazy(() => import("../pages/Login"));
+const Register = lazy(() => import("../pages/Register"));
 const NotFound = lazy(() => import("../pages/NotFound"));
+
+/**
+ * ProtectedRoute: Intercepts transitions into protected views.
+ * If user token check is pending, renders a spinner. If unauthorized, redirects to /login.
+ */
+function ProtectedRoute() {
+  const { token, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-[60vh] w-full p-6">
+        <div className="w-12 h-12 rounded-full border-4 border-indigo-150 dark:border-indigo-950/20 border-t-indigo-600 animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Outlet />;
+}
 
 /**
  * LoadingFallback component represents the loading spinner.
@@ -22,21 +43,14 @@ const NotFound = lazy(() => import("../pages/NotFound"));
  */
 function LoadingFallback() {
   return (
-    // Centered flex layout wrapper to occupy 60% of the viewport height during lazy component transitions
     <div className="flex flex-col items-center justify-center min-h-[60vh] w-full p-6">
-      {/* Container to stack the animation elements relatively */}
       <div className="relative flex items-center justify-center">
-        {/* Outer glowing pulsing circle representing primary theme color with opacity */}
-        <div className="absolute w-16 h-16 rounded-full border-4 border-primary/10 border-t-primary/40 animate-ping"></div>
-        {/* Inner high-speed spinning indicator representing primary theme color */}
-        <div className="w-12 h-12 rounded-full border-4 border-primary/20 border-t-primary animate-spin"></div>
-      {/* End relative spinner stack wrapper */}
+        <div className="absolute w-16 h-16 rounded-full border-4 border-indigo-600/10 border-t-indigo-600/40 animate-ping"></div>
+        <div className="w-12 h-12 rounded-full border-4 border-indigo-600/20 border-t-indigo-600 animate-spin"></div>
       </div>
-      {/* Text label underneath the loader showing an active state change to the user */}
-      <p className="mt-4 text-sm font-medium text-text-gray animate-pulse tracking-wide">
+      <p className="mt-4 text-sm font-medium text-slate-500 dark:text-gray-400 animate-pulse tracking-wide">
         Loading view... Please wait
       </p>
-    {/* End main centering flex wrapper */}
     </div>
   );
 }
@@ -47,24 +61,27 @@ function LoadingFallback() {
  */
 function AppRoutes() {
   return (
-    // React Suspense wraps the routes and provides the LoadingFallback component when resources are being fetched
     <Suspense fallback={<LoadingFallback />}>
-      {/* Routes is the React Router v6 container that evaluates active locations and chooses matching routes */}
       <Routes>
-        {/* Exact path match mapping root url '/' to lazy loaded CRM Dashboard page */}
-        <Route path="/" element={<Dashboard />} />
+        {/* Public Routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-        {/* Path match mapping '/leads' to lazy loaded Leads Management table page */}
-        <Route path="/leads" element={<Leads />} />
+        {/* Protected Routes Wrapper */}
+        <Route element={<ProtectedRoute />}>
+          {/* Exact path match mapping root url '/' to lazy loaded CRM Dashboard page */}
+          <Route path="/" element={<Dashboard />} />
 
-        {/* Path match mapping '/analytics' to lazy loaded CRM Analytics metrics page */}
-        <Route path="/analytics" element={<Analytics />} />
+          {/* Path match mapping '/leads' to lazy loaded Leads Management table page */}
+          <Route path="/leads" element={<Leads />} />
+
+          {/* Path match mapping '/analytics' to lazy loaded CRM Analytics metrics page */}
+          <Route path="/analytics" element={<Analytics />} />
+        </Route>
 
         {/* Wildcard path match mapping all remaining unmatched URLs to lazy loaded 404 page */}
         <Route path="*" element={<NotFound />} />
-      {/* End Routes matching container */}
       </Routes>
-    {/* End Suspense container */}
     </Suspense>
   );
 }
