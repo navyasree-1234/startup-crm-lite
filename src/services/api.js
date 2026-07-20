@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
  * Fallback to http://localhost:5000 in development if undefined.
  */
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000",
+  baseURL: import.meta.env.DEV ? "http://localhost:5000" : "",
 });
 
 // Request Interceptor: Automatically inject Authorization token if present in localStorage
