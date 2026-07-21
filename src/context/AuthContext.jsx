@@ -66,8 +66,10 @@ export function AuthProvider({ children }) {
         return { success: true };
       }
     } catch (err) {
-      const errMsg = err.response?.data?.message || "Invalid email or password.";
-      toast.error(errMsg);
+      const errMsg = err.response?.data?.message || (err.response ? "Invalid email or password." : "Cannot connect to server. Check your connection.");
+      if (err.response) {
+        toast.error(errMsg);
+      }
       return { success: false, error: errMsg };
     } finally {
       setIsLoading(false);
@@ -98,11 +100,22 @@ export function AuthProvider({ children }) {
     } catch (err) {
       // Check for validation errors returned from the express-validator middleware
       const valErrors = err.response?.data?.errors;
-      const errMsg = valErrors && valErrors.length > 0 
-        ? valErrors[0].message 
-        : (err.response?.data?.message || "Registration failed.");
+      let errMsg = "Registration failed.";
+      if (valErrors && typeof valErrors === "object") {
+        if (Array.isArray(valErrors) && valErrors.length > 0) {
+          errMsg = valErrors[0].message || valErrors[0].msg || "Registration validation failed.";
+        } else {
+          errMsg = Object.values(valErrors)[0] || "Registration validation failed.";
+        }
+      } else if (err.response?.data?.message) {
+        errMsg = err.response.data.message;
+      } else if (!err.response) {
+        errMsg = "Cannot connect to server. Check your connection.";
+      }
       
-      toast.error(errMsg);
+      if (err.response) {
+        toast.error(errMsg);
+      }
       return { success: false, error: errMsg };
     } finally {
       setIsLoading(false);

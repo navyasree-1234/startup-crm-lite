@@ -5,8 +5,19 @@ import toast from "react-hot-toast";
  * Configure standard Axios client instance using Vite environment variables.
  * Fallback to http://localhost:5000 in development if undefined.
  */
+const getBaseUrl = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL.replace(/\/$/, "");
+  }
+  if (import.meta.env.DEV) {
+    return "http://localhost:5000";
+  }
+  return "https://startup-crm-lite-zcrl.onrender.com";
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.DEV ? "http://localhost:5000" : "",
+  baseURL: getBaseUrl(),
+  timeout: 30000,
 });
 
 // Request Interceptor: Automatically inject Authorization token if present in localStorage
