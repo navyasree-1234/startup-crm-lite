@@ -120,6 +120,17 @@ export function AuthProvider({ children }) {
     navigate("/login");
   };
 
+  /**
+   * Clears the current user's session and redirects to login with account switch query option.
+   */
+  const switchUser = () => {
+    authService.logout();
+    setToken(null);
+    setUser(null);
+    toast.success("Session cleared. Please sign in with another account.");
+    navigate("/login?switch=true");
+  };
+
   // Compile context bundle values
   const value = {
     user,
@@ -128,6 +139,7 @@ export function AuthProvider({ children }) {
     login,
     register,
     logout,
+    switchUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

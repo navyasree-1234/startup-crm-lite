@@ -5,16 +5,20 @@ import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 
 // Import visual Lucide icon components representing dashboard metrics, lead users, analytics bars, hamburger menus, exit icons, and branding landmark
-import { LayoutDashboard, Users, BarChart3, Menu, X, Landmark } from "lucide-react";
+import { LayoutDashboard, Users, BarChart3, Menu, X, Landmark, LogOut } from "lucide-react";
 
 // Import DarkModeToggle component
 import DarkModeToggle from "./DarkModeToggle";
+
+// Import useAuth custom hook
+import { useAuth } from "../../context/AuthContext";
 
 /**
  * Navbar component represents the Sidebar navigation on desktop/tablet viewports
  * and a sticky bottom navigation bar with a sliding settings drawer on mobile viewports.
  */
 function Navbar() {
+  const { user, logout, switchUser } = useAuth();
   // Define a state variable 'isOpen' initialized to false to determine if the mobile menu drawer is currently open or closed
   const [isOpen, setIsOpen] = useState(false);
 
@@ -144,10 +148,48 @@ function Navbar() {
             </div>
           </div>
 
-          {/* Drawer Footer */}
-          <div className="border-t border-slate-100 dark:border-gray-700 pt-4 text-left">
-            <p className="font-bold text-slate-700 dark:text-gray-300 text-sm">CRM Lite Admin</p>
-            <p className="text-[10px] text-slate-400 dark:text-gray-500 mt-1">&copy; 2026 Startup CRM Lite Inc.</p>
+          {/* Drawer Footer and Profile actions */}
+          <div className="flex flex-col gap-6 mt-auto">
+            {user && (
+              <div className="border-t border-slate-100 dark:border-gray-700 pt-6">
+                <div className="flex items-center gap-3 mb-4 px-1">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-blue-500/10 shrink-0">
+                    {user.name ? user.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) : "US"}
+                  </div>
+                  <div className="flex flex-col min-w-0 text-left">
+                    <span className="font-bold text-slate-800 dark:text-white text-sm truncate">{user.name}</span>
+                    <span className="text-[10px] text-slate-400 dark:text-gray-500 truncate">{user.email}</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      switchUser();
+                    }}
+                    className="flex items-center justify-center gap-1.5 px-3 py-2.5 bg-slate-50 hover:bg-slate-100 dark:bg-gray-900/50 dark:hover:bg-gray-700/80 border border-slate-200 dark:border-gray-700 rounded-xl text-slate-650 dark:text-gray-300 font-semibold text-xs transition-all cursor-pointer"
+                  >
+                    <Users className="w-3.5 h-3.5" />
+                    <span>Switch User</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      logout();
+                    }}
+                    className="flex items-center justify-center gap-1.5 px-3 py-2.5 bg-rose-50 hover:bg-rose-100/80 dark:bg-rose-950/20 dark:hover:bg-rose-950/40 border border-rose-100/70 dark:border-rose-900/30 rounded-xl text-rose-600 dark:text-rose-450 font-semibold text-xs transition-all cursor-pointer"
+                  >
+                    <LogOut className="w-3.5 h-3.5" />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              </div>
+            )}
+
+            <div className="border-t border-slate-100 dark:border-gray-700 pt-4 text-left">
+              <p className="font-bold text-slate-700 dark:text-gray-300 text-sm">CRM Lite Admin</p>
+              <p className="text-[10px] text-slate-400 dark:text-gray-500 mt-1">&copy; 2026 Startup CRM Lite Inc.</p>
+            </div>
           </div>
         </aside>
       </div>
@@ -185,13 +227,46 @@ function Navbar() {
         </div>
 
         {/* Footer info panel at the bottom of the sidebar */}
-        <div className="border-t border-slate-100 dark:border-gray-700 pt-6 px-2 text-xs text-slate-400 dark:text-gray-500 text-left">
-          <div className="flex items-center justify-between mb-4">
+        <div className="border-t border-slate-100 dark:border-gray-700 pt-6 px-2 text-left">
+          {/* User Profile and Session Actions */}
+          {user && (
+            <div className="mb-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-blue-500/10 shrink-0">
+                  {user.name ? user.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) : "US"}
+                </div>
+                <div className="flex flex-col min-w-0 text-left">
+                  <span className="font-bold text-slate-800 dark:text-white text-sm truncate">{user.name}</span>
+                  <span className="text-[10px] text-slate-450 dark:text-gray-400 truncate">{user.email}</span>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={switchUser}
+                  className="flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-50 hover:bg-slate-100 dark:bg-gray-900/50 dark:hover:bg-gray-700/80 border border-slate-200 dark:border-gray-700 rounded-xl text-slate-650 dark:text-gray-300 font-semibold text-xs transition-all hover:translate-y-[-1px] cursor-pointer"
+                  title="Switch to another account"
+                >
+                  <Users className="w-3.5 h-3.5" />
+                  <span>Switch</span>
+                </button>
+                <button
+                  onClick={logout}
+                  className="flex items-center justify-center gap-1.5 px-3 py-2 bg-rose-50 hover:bg-rose-100/80 dark:bg-rose-950/20 dark:hover:bg-rose-950/40 border border-rose-100/70 dark:border-rose-900/30 rounded-xl text-rose-600 dark:text-rose-455 font-semibold text-xs transition-all hover:translate-y-[-1px] cursor-pointer"
+                  title="Sign out of your session"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-center justify-between mb-4 text-xs text-slate-400 dark:text-gray-500">
             <span className="text-xs font-semibold text-slate-500 dark:text-gray-400">Theme</span>
             <DarkModeToggle />
           </div>
-          <p className="font-semibold text-slate-500 dark:text-gray-400 mb-1">CRM Lite Admin</p>
-          <p>&copy; 2026 Startup CRM Lite</p>
+          <p className="font-semibold text-slate-500 dark:text-gray-400 mb-1 text-xs">CRM Lite Admin</p>
+          <p className="text-xs text-slate-400 dark:text-gray-500">&copy; 2026 Startup CRM Lite</p>
         </div>
       </aside>
     </>

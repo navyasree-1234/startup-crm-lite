@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Mail, Lock, Loader2, LogIn } from "lucide-react";
 
@@ -9,6 +9,8 @@ import { Mail, Lock, Loader2, LogIn } from "lucide-react";
  */
 export default function Login() {
   const { login } = useAuth();
+  const [searchParams] = useSearchParams();
+  const isSwitch = searchParams.get("switch") === "true";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -42,10 +44,10 @@ export default function Login() {
             <LogIn className="w-7 h-7" />
           </div>
           <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            Welcome Back
+            {isSwitch ? "Switch Account" : "Welcome Back"}
           </h2>
           <p className="text-sm font-medium text-slate-500 dark:text-gray-400 mt-2">
-            Log in to manage your Startup CRM pipeline
+            {isSwitch ? "Sign in with another account" : "Log in to manage your Startup CRM pipeline"}
           </p>
         </div>
 
