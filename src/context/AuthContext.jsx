@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import authService from "../services/authService.js";
 import toast from "react-hot-toast";
+import { extractErrorMessage } from "../utils/errorExtractor.js";
 
 // Create context container for authorization states
 export const AuthContext = createContext();
@@ -66,7 +67,7 @@ export function AuthProvider({ children }) {
         return { success: true };
       }
     } catch (err) {
-      const errMsg = err.response?.data?.message || (err.response ? "Invalid email or password." : "Cannot connect to server. Check your connection.");
+      const errMsg = extractErrorMessage(err, "Invalid email or password.");
       if (err.response) {
         toast.error(errMsg);
       }
@@ -98,21 +99,7 @@ export function AuthProvider({ children }) {
         return { success: true };
       }
     } catch (err) {
-      // Check for validation errors returned from the express-validator middleware
-      const valErrors = err.response?.data?.errors;
-      let errMsg = "Registration failed.";
-      if (valErrors && typeof valErrors === "object") {
-        if (Array.isArray(valErrors) && valErrors.length > 0) {
-          errMsg = valErrors[0].message || valErrors[0].msg || "Registration validation failed.";
-        } else {
-          errMsg = Object.values(valErrors)[0] || "Registration validation failed.";
-        }
-      } else if (err.response?.data?.message) {
-        errMsg = err.response.data.message;
-      } else if (!err.response) {
-        errMsg = "Cannot connect to server. Check your connection.";
-      }
-      
+      const errMsg = extractErrorMessage(err, "Registration failed.");
       if (err.response) {
         toast.error(errMsg);
       }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { extractErrorMessage } from "../utils/errorExtractor.js";
 
 /**
  * Configure standard Axios client instance using Vite environment variables.
@@ -55,7 +56,7 @@ api.interceptors.response.use(
       }
     } else if (request) {
       // 2. Handle client-side offline or server network failures
-      toast.error("Cannot connect to server. Check your connection.");
+      toast.error(extractErrorMessage(error));
     }
 
     return Promise.reject(error);

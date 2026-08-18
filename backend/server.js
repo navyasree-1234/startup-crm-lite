@@ -53,7 +53,7 @@ if (process.env.NODE_ENV === "production") {
 // 3. CORS configuration with dynamic checking for production and local environments
 const allowedOrigins = [
   process.env.FRONTEND_URL,
-  "https://your-app.vercel.app",
+  "https://startup-crm-lite-navyasreethatigutla-7037s-projects.vercel.app",
   "http://localhost:5173" // Fallback local development port
 ].filter(Boolean); // Clean any undefined values
 
