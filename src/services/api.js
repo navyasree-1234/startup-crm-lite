@@ -18,7 +18,7 @@ const getBaseUrl = () => {
 
 const api = axios.create({
   baseURL: getBaseUrl(),
-  timeout: 30000,
+  timeout: 60000, // Extended timeout to allow Render free tier cold-starts
 });
 
 // Request Interceptor: Automatically inject Authorization token if present in localStorage
