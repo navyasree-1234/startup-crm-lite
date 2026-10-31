@@ -198,7 +198,7 @@ export const updateLead = async (req, res, next) => {
     const lead = await Lead.findOneAndUpdate(
       { _id: req.params.id, owner: req.user._id },
       updateData,
-      { new: true, runValidators: true }
+      { returnDocument: "after", runValidators: true }
     );
 
     if (!lead) {
@@ -242,7 +242,7 @@ export const updateLeadStatus = async (req, res, next) => {
     const lead = await Lead.findOneAndUpdate(
       { _id: req.params.id, owner: req.user._id },
       { status },
-      { new: true, runValidators: true }
+      { returnDocument: "after", runValidators: true }
     );
 
     if (!lead) {

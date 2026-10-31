@@ -61,6 +61,7 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
+    console.log("🔑 [Login Attempt] Email:", email);
 
     // 1. Find user by email (explicitly select password to compare)
     const user = await User.findOne({ email }).select("+password");

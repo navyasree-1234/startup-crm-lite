@@ -59,6 +59,12 @@ const errorHandler = (err, req, res, next) => {
     message = "Token has expired. Please log in again.";
   }
 
+  // 6. CORS origin rejection (Code 403)
+  else if (err.message === "Not allowed by CORS") {
+    statusCode = 403;
+    message = "Origin not allowed by CORS policy";
+  }
+
   // Build client payload format.
   // Never expose stack trace in production environments to maintain security hygiene.
   const isDev = process.env.NODE_ENV === "development";

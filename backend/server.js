@@ -38,44 +38,90 @@ checkRequiredEnvVars();
 
 const app = express();
 
+// Trust proxy for hosted environments (Render, Vercel, Heroku, etc.)
+app.set("trust proxy", 1);
+
 // --- Express Configuration & Middlewares ---
 
-// 1. Helmet to secure Express apps by setting various HTTP headers
-app.use(helmet());
+// 1. CORS configuration with dynamic origin checking for production, Vercel deployments, and local environments
+const defaultAllowedOrigins = [
+  "https://startup-crm-lite-zeta.vercel.app",
+  "https://startup-crm-lite.vercel.app",
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "http://localhost:5000",
+  "http://127.0.0.1:5173",
+  "http://127.0.0.1:3000",
+  "http://127.0.0.1:5000"
+];
 
-// 2. Request logging configuration based on environment type
+if (process.env.FRONTEND_URL) {
+  const envUrl = process.env.FRONTEND_URL.trim().replace(/\/$/, "");
+  if (envUrl && !defaultAllowedOrigins.includes(envUrl)) {
+    defaultAllowedOrigins.push(envUrl);
+  }
+}
+
+const isOriginAllowed = (origin) => {
+  if (!origin) return true; // Allow curl, mobile apps, Postman, health-checks
+  const cleanOrigin = origin.trim().replace(/\/$/, "");
+
+  // Match exact allowed origin list
+  if (defaultAllowedOrigins.some((allowed) => allowed.toLowerCase() === cleanOrigin.toLowerCase())) {
+    return true;
+  }
+
+  // Match any Vercel deployment preview / production URL for this project
+  if (/^https:\/\/startup-crm-lite(-[a-z0-9-]+)?\.vercel\.app$/i.test(cleanOrigin)) {
+    return true;
+  }
+
+  // Match local development ports
+  if (/^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(cleanOrigin)) {
+    return true;
+  }
+
+  return false;
+};
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (isOriginAllowed(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "X-Requested-With",
+    "Accept",
+    "Origin"
+  ],
+  exposedHeaders: ["Content-Range", "X-Content-Range"],
+  optionsSuccessStatus: 204
+};
+
+// Apply CORS middleware first so preflight and headers are processed immediately
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
+
+// 2. Helmet to secure Express apps by setting various HTTP headers
+// Allow cross-origin requests from Vercel frontend to read API resources
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" }
+  })
+);
+
+// 3. Request logging configuration based on environment type
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("combined"));
 } else {
   app.use(morgan("dev"));
 }
-
-// 3. CORS configuration with dynamic checking for production and local environments
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  "https://startup-crm-lite-navyasreethatigutla-7037s-projects.vercel.app",
-  "http://localhost:5173" // Fallback local development port
-].filter(Boolean); // Clean any undefined values
-
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, or server-to-server requests)
-      // Also allow any localhost/127.0.0.1 port in development/local environments
-      if (
-        !origin ||
-        allowedOrigins.includes(origin) ||
-        origin.startsWith("http://localhost:") ||
-        origin.startsWith("http://127.0.0.1:")
-      ) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
 
 // 4. Request body size-limiting for JSON payloads to prevent DOS attacks
 app.use(express.json({ limit: "10kb" }));
@@ -104,14 +150,20 @@ app.use(mongoSanitize());
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100,
-  message: "Too many requests, please try again later.",
+  message: { success: false, message: "Too many requests, please try again later." },
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => req.method === "OPTIONS"
 });
 
-// Authentication rate limiter (stricter): 10 requests per 15 minutes per IP
+// Authentication rate limiter: 50 requests per 15 minutes per IP
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10,
-  message: "Too many auth attempts.",
+  max: 50,
+  message: { success: false, message: "Too many authentication attempts. Please try again in 15 minutes." },
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => req.method === "OPTIONS"
 });
 
 // Apply general rate limiting to all API requests
@@ -132,7 +184,7 @@ app.use("/api/leads", leadRoutes);
 app.get("/", (req, res) => {
   res.json({
     success: true,
-    message: "Startup CRM Backend is Running 🚀",
+    message: "Startup CRM Backend is Running 🚀 - Version 1.0.2",
   });
 });
 
